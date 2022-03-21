@@ -1,0 +1,16 @@
+/* :root {
+	font-size: 62.5%;
+} */
+
+* {
+	box-sizing: border-box;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0;
+	padding: 30px;
+	font-family: sans-serif;
+}

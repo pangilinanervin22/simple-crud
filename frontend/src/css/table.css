@@ -1,0 +1,66 @@
+table {
+	border-collapse: collapse;
+	width: 90vw;
+}
+
+thead {
+	color: coral;
+	text-align: left;
+	text-transform: capitalize;
+}
+
+th {
+	font-size: x-large;
+	font-weight: 700;
+	border-bottom: wheat 3px solid;
+	text-align: left;
+}
+
+td,
+th {
+	padding-inline: 0.2rem;
+}
+
+td {
+	border-bottom: wheat 1px solid;
+	font-weight: 700;
+	padding-block: 1rem;
+	text-align: left;
+}
+
+th:hover {
+	cursor: pointer;
+}
+
+.button-special {
+	cursor: pointer;
+}
+
+.button-special:hover {
+	transform: scale(1.1);
+	box-shadow: 0 0 20px gray;
+}
+
+.button-add,
+.button-update {
+	color: white;
+	background: dodgerblue;
+	border: 0;
+	border-radius: 1.5rem;
+	padding-inline: 1rem;
+	padding-block: 0.2rem;
+}
+
+.button-delete,
+.button-error {
+	color: white;
+	background: tomato;
+	border: 0;
+	border-radius: 1.5rem;
+	padding-inline: 1rem;
+	padding-block: 0.2rem;
+}
+
+button:hover {
+	cursor: pointer;
+}

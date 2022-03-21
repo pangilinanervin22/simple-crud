@@ -1,0 +1,58 @@
+.disabled {
+	display: none;
+}
+
+.modal_form {
+	position: absolute;
+	width: 90vw;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 30px;
+	background: rgba(128, 128, 128, 0.9);
+}
+
+.login_form {
+	background: wheat;
+	width: 500px;
+	padding: 1rem;
+	font-size: 2rem;
+}
+
+.form_group {
+	margin: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.label {
+	margin-right: 1rem;
+	color: darkcyan;
+}
+
+.input {
+	padding: 2px 5px;
+	border: none;
+	outline: none;
+}
+
+.input_error {
+	border: red 3px solid;
+}
+
+.error_msg {
+	font-size: 1.1rem;
+	color: rgb(212, 84, 84);
+	margin-top: 5px;
+}
+
+.btn_submit {
+	padding: 5px 15px;
+	border-radius: 1rem;
+	background: dodgerblue;
+}
+
+.error_button {
+	background: gray;
+}
