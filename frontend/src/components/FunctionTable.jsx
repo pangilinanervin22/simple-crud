@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import httpService from "../services/httpService";
-import ModalForm from "./forms/ModalForm";
 import PropTypes from "prop-types";
-import { log } from "joi-browser";
+import FormikSample from "./FormikSample";
 
 const apiEndpoint = "http://localhost:4000/api/movies/";
 
@@ -23,17 +22,17 @@ const FunctionTable = () => {
 	return (
 		<>
 			{modalVisibility ? (
-				<ModalForm data={pickData} isVisible={true} handleSubmit={handleSubmit} />
-			) : (
-				""
-			)}
+				<FormikSample
+					data={pickData}
+					isVisible={true}
+					handleSubmit={handleSubmit}
+					handelCancel={handelCancel}
+				/>
+			) : null}
 
 			<h1>Function Component</h1>
 			<button className="button-add" onClick={onHandleAdd}>
 				Add
-			</button>
-			<button className="button-update" onClick={getData}>
-				Update
 			</button>
 			<button className="button-error" onClick={handleError}>
 				Error
@@ -137,7 +136,8 @@ const FunctionTable = () => {
 
 	async function handleSubmit(post, isUpdating = false) {
 		if (isUpdating) {
-			if (JSON.stringify(post) !== JSON.stringify(pickData)) await handleUpdate(post);
+			if (JSON.stringify(post) !== JSON.stringify(pickData))
+				await handleUpdate(post);
 		} else await handleAdd(post);
 
 		setmodalVisibility(false);
@@ -147,6 +147,12 @@ const FunctionTable = () => {
 	async function onHandleAdd() {
 		setPickData({ title: "", genre: "" });
 		setmodalVisibility(true);
+	}
+
+	function handelCancel() {
+		console.log("hey");
+		setPickData({ title: "", genre: "" });
+		setmodalVisibility(false);
 	}
 };
 

@@ -1,20 +1,3 @@
-/* :root {
-	font-size: 62.5%;
-} */
-
-* {
-	box-sizing: border-box;
-	border: 0;
-	margin: 0;
-	padding: 0;
-}
-
-body {
-	margin: 0;
-	padding: 30px;
-	font-family: sans-serif;
-}
-
 .disabled {
 	display: none;
 }
@@ -50,7 +33,8 @@ body {
 
 .input {
 	padding: 2px 5px;
-	border: 1px solid black;
+	border: none;
+	outline: none;
 }
 
 .input_error {
@@ -59,10 +43,8 @@ body {
 
 .error_msg {
 	font-size: 1.1rem;
-	color: white;
+	color: rgb(212, 84, 84);
 	margin-top: 5px;
-	background: red;
-	padding: 3px;
 }
 
 .btn_submit {
