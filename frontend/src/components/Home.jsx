@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import FunctionTable from "./FunctionTable";
 import "../css/table.css";
-import Test from "./common/Test";
+import Test from "./Test";
 
 export default function Home() {
 	return (
 		<>
 			<FunctionTable title={"FunctionComponent"} />
-			{/* <Test /> */}
+			<h1>Home </h1>
 		</>
 	);
 }
