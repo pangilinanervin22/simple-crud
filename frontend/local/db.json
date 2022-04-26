@@ -1,0 +1,62 @@
+{
+  "movies": [
+    {
+      "title": "titanic",
+      "genre": "romances",
+      "id": 2
+    },
+    {
+      "id": 3,
+      "title": "matrix",
+      "genre": "action"
+    },
+    {
+      "id": 1,
+      "title": "space jam",
+      "genre": "animation"
+    },
+    {
+      "title": "Mosh KALBO",
+      "genre": "educational",
+      "id": 4
+    },
+    {
+      "title": "Minions",
+      "genre": "animated",
+      "id": 5
+    },
+    {
+      "title": "Thunder Strike",
+      "genre": "sports",
+      "id": 6
+    },
+    {
+      "title": "Jazz",
+      "genre": "hotdog",
+      "id": 8
+    },
+    {
+      "title": "Bumble bee",
+      "genre": "sci-fi",
+      "id": 13
+    },
+    {
+      "title": "Ants",
+      "genre": "animated",
+      "id": 14
+    },
+    {
+      "title": "Hotdog",
+      "genre": "educational",
+      "id": 15
+    },
+    {
+      "title": "Agent 007",
+      "genre": "action",
+      "id": 16
+    }
+  ],
+  "profile": {
+    "name": "admin"
+  }
+}
