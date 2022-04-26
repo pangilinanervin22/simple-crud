@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { NavLink, Outlet, Route, Routes } from "react-router-dom";
-import FirstTest from "../page/FirstTest";
-import SecondTest from "../page/SecondTest";
+import React from "react";
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function Test() {
 	return (

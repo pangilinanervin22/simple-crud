@@ -1,17 +1,14 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import { ThemeProvider } from "@mui/system";
+import { CssBaseline } from "@mui/material";
 import Test from "./components/Test";
 import Another from "./components/Another";
 import Navbar from "./components/Navbar";
 import FirstTest from "./page/FirstTest";
 import SecondTest from "./page/SecondTest";
-import { ThemeProvider } from "@mui/system";
 import theme from "./theme/theme";
 import SideBar from "./components/SideBar";
-import { CssBaseline } from "@mui/material";
-import ReactHookForm from "./components/ReactHookForm";
-import TableTest from "./components/TableTest";
 import NotFound from "./page/NotFound";
 const MUITest = React.lazy(() => import("./components/MUIFlex"));
 const MainTable = React.lazy(() => import("./components/MainTable"));
@@ -35,8 +32,7 @@ export default function App() {
 								<Route path="second" element={<SecondTest />} />
 							</Route>
 							<Route path="another" element={<Another />} />
-							<Route path="home" element={<MainTable />} />
-							<Route path="/" element={<TableTest />} />
+							<Route path="/" element={<MainTable />} />
 							<Route path="*" element={<NotFound />} />
 						</Routes>
 						<br />
