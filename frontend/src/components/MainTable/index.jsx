@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React, { useEffect, useState } from "react";
@@ -52,8 +52,14 @@ export default function index() {
 	];
 
 	const [tableData, setTableData] = useState([]);
-	const [toggleFormValue, setToggleForm] = useToggle(false);
-	const [toggleDeleteValue, setToggleDelete] = useToggle(false);
+	const [toggleForm, setToggleForm] = useToggle(false);
+	const [toggleDelete, setToggleDelete] = useToggle(false);
+	const [toggleSnackBar, setToggleSnackBar] = useToggle(true);
+	const [snackBarData, setSnackBarData] = useState({
+		status: "success",
+		message: "reload successfully",
+	});
+
 	const [pickData, setPickData] = useState({
 		title: "",
 		genre: "",
@@ -73,12 +79,12 @@ export default function index() {
 		<>
 			<MovieFormDialog
 				currentObject={pickData}
-				isOpen={toggleFormValue}
+				isOpen={toggleForm}
 				handleOpenDialog={setToggleForm}
 				handleConfirmDialog={addMovie}
 			/>
 			<MovieDeleteDialog
-				isOpen={toggleDeleteValue}
+				isOpen={toggleDelete}
 				handleOpenDialog={setToggleDelete}
 				handleDelete={deleteMovie}
 				currentObject={pickData}
@@ -88,6 +94,17 @@ export default function index() {
 				handleOpenDialog={setToggleForm}
 				tableData={tableData}
 			/>
+
+			<Snackbar
+				open={toggleSnackBar}
+				autoHideDuration={3000}
+				onClose={setToggleSnackBar}
+				children={"wew"}
+			>
+				<Alert severity={snackBarData.status} sx={{ width: "100%" }}>
+					{snackBarData.message}
+				</Alert>
+			</Snackbar>
 		</>
 	);
 
@@ -98,23 +115,34 @@ export default function index() {
 		});
 	}
 
+	function openSnackBar(status, message) {
+		setSnackBarData({ status, message });
+		setToggleSnackBar();
+	}
+
 	async function addMovie(post) {
 		const obj = { title: post.title, genre: post.genre };
 
-		console.log(post.id == true);
-
-		if (post.id)
-			await httpService.put(`${apiEndpoint}/${post.id}`, {
-				title: post.title,
-				genre: post.genre,
-			});
-		else await httpService.post(apiEndpoint, obj);
+		try {
+			if (post.id)
+				await httpService.put(`${apiEndpoint}/${post.id}`, {
+					title: post.title,
+					genre: post.genre,
+				});
+			else await httpService.post(apiEndpoint, obj);
+		} catch (error) {
+			openSnackBar("error", error.message);
+		}
 
 		resetForm();
 	}
 
 	async function deleteMovie() {
-		await httpService.delete(`${apiEndpoint}/${pickData.id}`);
+		try {
+			await httpService.delete(`${apiEndpoint}/${pickData.id}`);
+		} catch (error) {
+			openSnackBar("error", error.message);
+		}
 
 		setToggleDelete();
 		resetForm();
