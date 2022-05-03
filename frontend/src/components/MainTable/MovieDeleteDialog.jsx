@@ -24,9 +24,6 @@ export default function MovieDeleteDialog({
 						{currentObject.title}
 					</DialogContentText>
 					<DialogActions sx={{ mt: 2 }}>
-						<Button variant="contained" onClick={handleOpenDialog}>
-							Disagree
-						</Button>
 						<Button
 							variant="contained"
 							color="error"
@@ -34,6 +31,9 @@ export default function MovieDeleteDialog({
 							autoFocus
 						>
 							Agree
+						</Button>
+						<Button variant="contained" onClick={handleOpenDialog}>
+							Disagree
 						</Button>
 					</DialogActions>
 				</DialogContent>

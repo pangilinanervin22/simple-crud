@@ -52,7 +52,9 @@ export default function MovieFormDialog({
 	return (
 		<>
 			<Dialog open={isOpen} onClose={handleOpenDialog}>
-				<DialogTitle> Edit Movie</DialogTitle>
+				<DialogTitle>
+					{currentObject.id ? "Edit movie" : "Add new movie"}
+				</DialogTitle>
 				<DialogContent>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<Box
@@ -91,9 +93,8 @@ export default function MovieFormDialog({
 								<Button
 									type="submit"
 									variant="contained"
-									color="primary"
+									color="secondary"
 									sx={{
-										background: "dodgerblue",
 										width: "20%",
 										margin: "3px",
 									}}
@@ -108,7 +109,7 @@ export default function MovieFormDialog({
 										width: "20%",
 										margin: "3px",
 									}}
-									onClick={handleCancel}
+									onClick={handleOpenDialog}
 								>
 									Cancel
 								</Button>
@@ -119,10 +120,4 @@ export default function MovieFormDialog({
 			</Dialog>
 		</>
 	);
-
-	function handleCancel() {
-		setValue("title", "");
-		setValue("genre", "");
-		handleOpenDialog();
-	}
 }

@@ -80,8 +80,11 @@ export default function index() {
 			<MovieFormDialog
 				currentObject={pickData}
 				isOpen={toggleForm}
-				handleOpenDialog={setToggleForm}
 				handleConfirmDialog={addMovie}
+				handleOpenDialog={() => {
+					setToggleForm();
+					resetForm();
+				}}
 			/>
 			<MovieDeleteDialog
 				isOpen={toggleDelete}
@@ -93,13 +96,13 @@ export default function index() {
 				tableBase={base}
 				handleOpenDialog={setToggleForm}
 				tableData={tableData}
+				refreshData={fetchData}
 			/>
 
 			<Snackbar
 				open={toggleSnackBar}
 				autoHideDuration={3000}
 				onClose={setToggleSnackBar}
-				children={"wew"}
 			>
 				<Alert severity={snackBarData.status} sx={{ width: "100%" }}>
 					{snackBarData.message}
@@ -107,6 +110,12 @@ export default function index() {
 			</Snackbar>
 		</>
 	);
+
+	async function fetchData() {
+		const res = await httpService.get(apiEndpoint);
+
+		setTableData(res.data);
+	}
 
 	function resetForm() {
 		setPickData({
@@ -130,8 +139,10 @@ export default function index() {
 					genre: post.genre,
 				});
 			else await httpService.post(apiEndpoint, obj);
+
+			openSnackBar("success", "Successful action");
 		} catch (error) {
-			openSnackBar("error", error.message);
+			openSnackBar("error", `${post.title} are not found`);
 		}
 
 		resetForm();
@@ -140,11 +151,15 @@ export default function index() {
 	async function deleteMovie() {
 		try {
 			await httpService.delete(`${apiEndpoint}/${pickData.id}`);
+			openSnackBar(
+				"success",
+				`${pickData.title} are successfully deleted`
+			);
 		} catch (error) {
-			openSnackBar("error", error.message);
+			openSnackBar("error", `${post.title} are not found`);
 		}
 
-		setToggleDelete();
 		resetForm();
+		setToggleDelete();
 	}
 }

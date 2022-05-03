@@ -12,9 +12,12 @@ import {
 	Box,
 	TextField,
 	InputAdornment,
+	IconButton,
+	CircularProgress,
 } from "@mui/material";
 import React, { Component } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { paginate } from "./utils/paginate";
 import { sortPath } from "./utils/sortPath";
 
@@ -27,7 +30,8 @@ export default class MainTable extends Component {
 	};
 
 	render() {
-		const { tableBase, handleOpenDialog, tableData } = this.props;
+		const { tableBase, handleOpenDialog, tableData, refreshData } =
+			this.props;
 
 		return (
 			<>
@@ -48,6 +52,7 @@ export default class MainTable extends Component {
 						<TextField
 							size="small"
 							onChange={this.handleSearch}
+							placeholder={`Search title`}
 							InputProps={{
 								endAdornment: (
 									<InputAdornment position="start">
@@ -56,9 +61,21 @@ export default class MainTable extends Component {
 								),
 							}}
 						/>
-						<Button variant="contained" onClick={handleOpenDialog}>
-							Add new
-						</Button>
+						<Box>
+							<IconButton
+								onClick={refreshData}
+								size="medium"
+								color="primary"
+							>
+								<RefreshIcon fontSize="large" />
+							</IconButton>
+							<Button
+								variant="contained"
+								onClick={handleOpenDialog}
+							>
+								Add new data
+							</Button>
+						</Box>
 					</Box>
 					<Table>
 						<TableHead sx={{ background: "#e8e800" }}>
@@ -78,27 +95,38 @@ export default class MainTable extends Component {
 							</TableRow>
 						</TableHead>
 					</Table>
-					<TableContainer sx={{ height: 350 }}>
-						<Table size="medium">
-							<TableBody>
-								{this.getDataTable().map((item) => (
-									<TableRow key={item.id}>
-										{tableBase.map((base) => (
-											<TableCell
-												width="25%"
-												key={base.path || base.key}
-											>
-												{this.renderCellBody(
-													item,
-													base
-												)}
-											</TableCell>
-										))}
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
+					{tableData.length === 0 ? (
+						<Box
+							height="350px"
+							display="flex"
+							justifyContent="center"
+							alignItems="center"
+						>
+							<CircularProgress />
+						</Box>
+					) : (
+						<TableContainer sx={{ height: 350 }}>
+							<Table size="medium">
+								<TableBody>
+									{this.getDataTable().map((item) => (
+										<TableRow key={item.id}>
+											{tableBase.map((base) => (
+												<TableCell
+													width="25%"
+													key={base.path || base.key}
+												>
+													{this.renderCellBody(
+														item,
+														base
+													)}
+												</TableCell>
+											))}
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					)}
 					<TablePagination
 						component="div"
 						sx={{ background: "#e8e800" }}
