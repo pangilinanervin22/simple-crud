@@ -1,22 +1,19 @@
-import React from "react";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 import { NavLink } from "react-router-dom";
+import SideBar from "./SideBar";
 
-export default function Navbar() {
+export default function NavBar() {
 	return (
-		<>
-			<h1>Navbar</h1>
-			<ul>
-				List
-				<li>
-					<NavLink to="/">Home</NavLink>
-				</li>
-				<li>
-					<NavLink to="/test">Test</NavLink>
-				</li>
-				<li>
-					<NavLink to="/another">Another</NavLink>
-				</li>
-			</ul>
-		</>
+		<Box sx={{ flexGrow: 1, mb: "30px" }}>
+			<AppBar position="fixed">
+				<Toolbar variant="dense">
+					<h1>Hello</h1>
+					<SideBar />
+				</Toolbar>
+			</AppBar>
+		</Box>
 	);
 }

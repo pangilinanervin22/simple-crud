@@ -5,7 +5,9 @@ import { log } from "console";
 export default {
 	//get data
 	async getAllMovies(req: Request, res: Response) {
-		const temp = await Movies.find().sort({ name: 1 }).select("title _id genre");
+		const temp = await Movies.find()
+			.sort({ name: 1 })
+			.select("title _id genre");
 
 		res.send(temp);
 	},
@@ -14,7 +16,11 @@ export default {
 		const movie: any = await Movies.findOne({
 			_id: req.params.id,
 		});
-		if (!movie) return res.status(404).send("The genre with the given ID was not found.");
+
+		if (!movie)
+			return res
+				.status(404)
+				.send("The genre with the given ID was not found.");
 
 		console.log(movie.get("title"));
 
@@ -37,7 +43,10 @@ export default {
 	//delete data
 	async deleteMovieById(req: Request, res: Response) {
 		const temp = await Movies.findByIdAndDelete(req.params.id);
-		if (!temp) return res.status(404).send("The genre with the given ID was not found.");
+		if (!temp)
+			return res
+				.status(404)
+				.send("The genre with the given ID was not found.");
 
 		res.send(temp);
 	},
@@ -55,7 +64,10 @@ export default {
 			genre: req.body.genre,
 		});
 
-		if (!movie) return res.status(404).send("The genre with the given ID was not found.");
+		if (!movie)
+			return res
+				.status(404)
+				.send("The genre with the given ID was not found.");
 
 		res.send(movie);
 	},
@@ -66,6 +78,7 @@ export default {
 			title: req.params.title,
 			genre: req.params.genre,
 		});
+
 		if (error) return res.status(400).send(error.details[0].message);
 
 		const movie = new Movies({

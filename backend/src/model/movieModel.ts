@@ -40,7 +40,7 @@ MovieSchema.methods.generateToken = function () {
 // 	console.log(path);
 // });
 
-export const Movies: Model<IMovies> = mongoose.model("Movies", MovieSchema);
+export const Movies = mongoose.model("Movies", MovieSchema);
 
 export function validateMovies(movie: IMovies) {
 	const schema = Joi.object({

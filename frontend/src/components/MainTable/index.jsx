@@ -1,4 +1,4 @@
-import { Alert, Button, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React, { useEffect, useState } from "react";
@@ -7,8 +7,9 @@ import MovieFormDialog from "./MovieFormDialog";
 import useToggle from "../../hooks/useToggle";
 import MovieDeleteDialog from "./MovieDeleteDialog";
 import httpService from "../../services/httpService";
+import { useGlobalContext } from "../../context";
 
-const apiEndpoint = "http://localhost:4000/movies/";
+const apiEndpoint = "http://localhost:3000/movies/";
 
 export default function index() {
 	const base = [
@@ -54,11 +55,7 @@ export default function index() {
 	const [tableData, setTableData] = useState([]);
 	const [toggleForm, setToggleForm] = useToggle(false);
 	const [toggleDelete, setToggleDelete] = useToggle(false);
-	const [toggleSnackBar, setToggleSnackBar] = useToggle(true);
-	const [snackBarData, setSnackBarData] = useState({
-		status: "success",
-		message: "reload successfully",
-	});
+	const { movies, loading, openSnackBar } = useGlobalContext();
 
 	const [pickData, setPickData] = useState({
 		title: "",
@@ -88,9 +85,12 @@ export default function index() {
 			/>
 			<MovieDeleteDialog
 				isOpen={toggleDelete}
-				handleOpenDialog={setToggleDelete}
-				handleDelete={deleteMovie}
 				currentObject={pickData}
+				handleDelete={deleteMovie}
+				handleOpenDialog={() => {
+					setToggleDelete();
+					resetForm();
+				}}
 			/>
 			<MainTable
 				tableBase={base}
@@ -98,16 +98,6 @@ export default function index() {
 				tableData={tableData}
 				refreshData={fetchData}
 			/>
-
-			<Snackbar
-				open={toggleSnackBar}
-				autoHideDuration={3000}
-				onClose={setToggleSnackBar}
-			>
-				<Alert severity={snackBarData.status} sx={{ width: "100%" }}>
-					{snackBarData.message}
-				</Alert>
-			</Snackbar>
 		</>
 	);
 
@@ -122,11 +112,6 @@ export default function index() {
 			title: "",
 			genre: "",
 		});
-	}
-
-	function openSnackBar(status, message) {
-		setSnackBarData({ status, message });
-		setToggleSnackBar();
 	}
 
 	async function addMovie(post) {

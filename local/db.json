@@ -2,7 +2,7 @@
   "movies": [
     {
       "title": "titanic",
-      "genre": "romances",
+      "genre": "romance",
       "id": 2
     },
     {
@@ -16,7 +16,7 @@
       "genre": "animation"
     },
     {
-      "title": "Mosh KALBO",
+      "title": "Mosh panot",
       "genre": "educational",
       "id": 4
     },
@@ -36,14 +36,29 @@
       "id": 13
     },
     {
-      "title": "Ants",
+      "title": "Antz",
       "genre": "animated",
       "id": 14
     },
     {
-      "title": "Hotdog",
+      "title": "Hotdog Is the best",
       "genre": "animation",
       "id": 17
+    },
+    {
+      "title": "Sample",
+      "genre": "animated",
+      "id": 20
+    },
+    {
+      "title": "Carlo",
+      "genre": "Mobile ",
+      "id": 21
+    },
+    {
+      "title": "Test",
+      "genre": "another ",
+      "id": 22
     }
   ],
   "profile": {
