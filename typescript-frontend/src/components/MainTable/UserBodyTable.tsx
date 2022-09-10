@@ -54,7 +54,9 @@ export default function UserBodyTable({ content, base }: UserBodyTableProps) {
 										variant="contained"
 										size="small"
 										onClick={() =>
-											dispatch(deleteUser(item))
+											redirect(`delete/${item.id}`, {
+												replace: true,
+											})
 										}
 									>
 										Delete

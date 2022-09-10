@@ -2,6 +2,7 @@ import { Paper, Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
+import UserDeleteConfirmation from "./components/UserDeleteConfirmation";
 import Login from "./pages/Login";
 import MainPage from "./pages/MainPage";
 import NotFound from "./pages/NotFound";
@@ -20,6 +21,10 @@ function App() {
 					<Routes>
 						<Route path="users" element={<Users />}>
 							<Route path=":id" element={<User />} />
+							<Route
+								path="delete/:id"
+								element={<UserDeleteConfirmation />}
+							/>
 						</Route>
 
 						<Route path="login" element={<Login />} />

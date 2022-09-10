@@ -21,8 +21,8 @@ const userSlice = createSlice({
 		addUser(state, action: PayloadAction<Users>) {
 			userAdapter.addOne(state, action.payload);
 		},
-		deleteUser(state, action: PayloadAction<Users>) {
-			userAdapter.removeOne(state, action.payload.id);
+		deleteUser(state, action) {
+			userAdapter.removeOne(state, action.payload);
 		},
 		updateUser(state, action) {
 			userAdapter.upsertOne(state, action.payload);
