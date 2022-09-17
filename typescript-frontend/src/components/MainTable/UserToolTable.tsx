@@ -10,9 +10,12 @@ import {
 	Refresh as RefreshIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-
-export default function ({ handleSearch }: { handleSearch: Function }) {
+import { memo } from "react";
+const UserToolTable = ({ handleSearch }: { handleSearch: Function }) => {
 	const redirect = useNavigate();
+
+	console.log("render");
+
 	return (
 		<>
 			<Box
@@ -48,4 +51,6 @@ export default function ({ handleSearch }: { handleSearch: Function }) {
 			</Box>
 		</>
 	);
-}
+};
+
+export default memo(UserToolTable);

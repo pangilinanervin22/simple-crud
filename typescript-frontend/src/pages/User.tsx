@@ -55,7 +55,6 @@ export default function User() {
 
 	const [isOpen, setIsOpen] = useState(true);
 	const data = useSelector((state: any) => userById(state, params.id));
-
 	const currentObject = !data || params.id === "new" ? {} : data;
 
 	console.log(currentObject);

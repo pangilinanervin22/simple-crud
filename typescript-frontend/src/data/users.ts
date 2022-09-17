@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { Users } from "@root/types";
-import { users } from "./main.json";
+// import { users } from "./main.json";
+import { users } from "./server.json";
 
 import axios from "axios";
 

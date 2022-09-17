@@ -5,21 +5,17 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import UserHeaderTable from "./UserHeaderTable";
 import UserToolTable from "./UserToolTable";
-import { Column, Users } from "@root/types";
+import { Column } from "@root/types";
 import UserBodyTable from "./UserBodyTable";
 import { paginate } from "@root/utils/paginate";
 import { sortPath } from "@root/utils/sortPath";
-import { allUsers } from "@root/data/users";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-	deleteUser,
-	selectAllUsers,
-	updateUser,
-} from "@root/app/features/userSlice";
+import { selectAllUsers } from "@root/app/features/userSlice";
+import { CurrencyYenTwoTone } from "@mui/icons-material";
 
 const Columns: Column[] = [
 	{ label: "Name", path: "name", align: "left" },
@@ -30,28 +26,51 @@ const Columns: Column[] = [
 
 export default function MainTable() {
 	const data = useSelector(selectAllUsers);
-	console.log(data);
 
-	const [state, setState] = useState({
-		currentPage: 0,
-		pageSize: 5,
-		sortColumn: { path: "name", order: "asc" },
-		searchQuery: "",
+	const [page, setPage] = useState({
+		current: 0,
+		size: 5,
 	});
 
-	const { currentPage, pageSize, sortColumn, searchQuery } = state;
-	let sizeData = data.length;
+	const [searchQuery, setSearchQuery] = useState("");
+	const [sortColumn, setSortColumn] = useState({
+		path: "name",
+		order: "asc",
+	});
 
-	let sortedData = data;
-	if (searchQuery) {
-		sortedData = data.filter((item) =>
-			item.name.toLowerCase().includes(searchQuery.toLowerCase())
-		);
+	const { current, size } = page;
 
-		sizeData = sortedData.length;
-	}
-	sortedData = sortPath(sortedData, sortColumn.path, sortColumn.order);
-	sortedData = paginate(sortedData, currentPage, pageSize);
+	let sortedData = [...data];
+
+	console.time("timer");
+	sortedData = useMemo(
+		() =>
+			data.filter((item) =>
+				item.name.toLowerCase().includes(searchQuery.toLowerCase())
+			),
+		[searchQuery, data]
+	);
+	let sizeData = sortedData.length;
+	sortedData = useMemo(
+		() =>
+			(sortedData = sortPath(
+				sortedData,
+				sortColumn.path,
+				sortColumn.order
+			)),
+		[sortColumn, searchQuery, data]
+	);
+	sortedData = useMemo(() => paginate(sortedData, current, size), [page]);
+
+	//old logic sorting
+	// sortedData = data.filter((item) =>
+	// 	item.name.toLowerCase().includes(searchQuery.toLowerCase())
+	// );
+	// let sizeData = sortedData.length;
+	// sortedData = sortPath(sortedData, sortColumn.path, sortColumn.order);
+	// sortedData = paginate(sortedData, current, size);
+
+	console.timeEnd("timer");
 
 	return (
 		<>
@@ -80,9 +99,9 @@ export default function MainTable() {
 				<TablePagination
 					component="div"
 					sx={{ background: "#1498C1" }}
-					page={currentPage}
+					page={current}
 					count={sizeData}
-					rowsPerPage={pageSize}
+					rowsPerPage={size}
 					rowsPerPageOptions={[5, 15, 30]}
 					onPageChange={handlePage}
 					onRowsPerPageChange={handlePageSize}
@@ -92,47 +111,47 @@ export default function MainTable() {
 	);
 
 	function handlePage(skipMUI: any, value: number) {
-		setState((prevState) => ({ ...prevState, currentPage: value }));
+		setPage({ ...page, current: value });
 	}
 
 	function handlePageSize(event: any) {
 		console.log(event.target.value);
 
-		setState((prevState) => ({
-			...prevState,
-			pageSize: event.target.value,
-			currentPage: 0,
-		}));
+		setPage({
+			size: event.target.value,
+			current: 0,
+		});
 	}
 
 	function handleHeaderClick(path: string) {
-		let temp = { ...state.sortColumn };
+		let tempSortColumn = { ...sortColumn };
 
-		if (temp.path === path)
-			temp.order = temp.order === "asc" ? "desc" : "asc";
-		else temp = { path, order: "asc" };
+		if (tempSortColumn.path === path)
+			tempSortColumn.order =
+				tempSortColumn.order === "asc" ? "desc" : "asc";
+		else tempSortColumn = { path, order: "asc" };
 
-		setState((prevState) => ({
-			...prevState,
-			sortColumn: temp,
-			currentPage: 0,
-		}));
+		setSortColumn(tempSortColumn);
+		setPage({
+			...page,
+			current: 0,
+		});
 	}
 
 	function handleSearch(value: string) {
-		setState((prevState) => ({
-			...prevState,
-			searchQuery: value,
-			currentPage: 0,
-		}));
+		setSearchQuery(value);
+		setPage({
+			...page,
+			current: 0,
+		});
 	}
 
 	function renderCellHeader(item: Column) {
 		if (item.path)
 			return (
 				<TableSortLabel
-					active={state.sortColumn.path === item.path}
-					direction={state.sortColumn.order}
+					active={sortColumn.path === item.path}
+					direction={sortColumn.order}
 					onClick={() => handleHeaderClick(item.path)}
 				>
 					{item.label}
