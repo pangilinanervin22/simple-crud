@@ -43,6 +43,7 @@ export default function MainTable() {
 	let sortedData = [...data];
 
 	console.time("timer");
+	//sorting by search query filter
 	sortedData = useMemo(
 		() =>
 			data.filter((item) =>
@@ -50,7 +51,10 @@ export default function MainTable() {
 			),
 		[searchQuery, data]
 	);
+
+	// declare size of table it may depends on the filter query
 	let sizeData = sortedData.length;
+	//sorting by path
 	sortedData = useMemo(
 		() =>
 			(sortedData = sortPath(
@@ -60,15 +64,11 @@ export default function MainTable() {
 			)),
 		[sortColumn, searchQuery, data]
 	);
-	sortedData = useMemo(() => paginate(sortedData, current, size), [page]);
-
-	//old logic sorting
-	// sortedData = data.filter((item) =>
-	// 	item.name.toLowerCase().includes(searchQuery.toLowerCase())
-	// );
-	// let sizeData = sortedData.length;
-	// sortedData = sortPath(sortedData, sortColumn.path, sortColumn.order);
-	// sortedData = paginate(sortedData, current, size);
+	// pagination table
+	sortedData = useMemo(
+		() => paginate(sortedData, current, size),
+		[page, data]
+	);
 
 	console.timeEnd("timer");
 
