@@ -1,4 +1,5 @@
 import { Grid, TextField } from "@mui/material";
+import GlobalNotification from "@root/components/GlobalNotification";
 
 export default function Login() {
 	return (
@@ -26,6 +27,7 @@ export default function Login() {
 					3rd
 				</Grid>
 			</Grid>
+			<GlobalNotification />
 		</>
 	);
 }

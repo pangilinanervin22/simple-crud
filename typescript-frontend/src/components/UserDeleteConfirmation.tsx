@@ -6,6 +6,7 @@ import {
 	Button,
 	Box,
 } from "@mui/material";
+import { showNotification } from "@root/app/features/notificationSlice";
 import { deleteUser } from "@root/app/features/userSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -55,6 +56,7 @@ export default function UserDeleteConfirmation() {
 	);
 
 	function handleConfirm() {
+		// dispatch(showNotification());
 		dispatch(deleteUser(params.id));
 		handleActions();
 	}
