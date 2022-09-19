@@ -4,6 +4,7 @@ import {
 	increment,
 	selectCountState,
 } from "@root/app/features/counterSlice";
+import { showNotification } from "@root/app/features/notificationSlice";
 import {
 	addUser,
 	selectAllUsers,
@@ -19,16 +20,21 @@ export default function MainPage() {
 	const data = useSelector(selectCountState);
 	const dispatch = useDispatch();
 
-	const userState = useSelector(selectUserState);
 	const status = useSelector(userStatus);
 
-	console.log(userState);
 	console.log(status, 2);
 
 	return (
 		<div>
 			<h1>Value : {data.count}</h1>
-			<button onClick={() => dispatch(increment())}>increment</button>
+			<button
+				onClick={() => {
+					dispatch(showNotification());
+					dispatch(increment());
+				}}
+			>
+				increment
+			</button>
 			<button onClick={() => dispatch(decrement())}>decrement</button>
 			<button>hello</button>
 		</div>

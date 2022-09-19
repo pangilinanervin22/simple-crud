@@ -56,7 +56,7 @@ export default function UserDeleteConfirmation() {
 	);
 
 	function handleConfirm() {
-		// dispatch(showNotification());
+		dispatch(showNotification());
 		dispatch(deleteUser(params.id));
 		handleActions();
 	}

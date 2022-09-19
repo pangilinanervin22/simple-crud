@@ -1,5 +1,6 @@
 import { Paper, Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
+import GlobalNotification from "./components/GlobalNotification";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import UserDeleteConfirmation from "./components/UserDeleteConfirmation";
@@ -10,12 +11,13 @@ import User from "./pages/User";
 import Users from "./pages/Users";
 
 function App() {
-	console.log(" render");
+	console.log(" render app");
 
 	return (
 		<>
 			<Box sx={{ position: "relative", display: "flex" }}>
 				<SideBar />
+				<GlobalNotification />
 				<Box sx={{ width: "100%" }}>
 					<NavBar />
 					<Routes>
