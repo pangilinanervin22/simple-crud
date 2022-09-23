@@ -3,6 +3,7 @@ import { allUsers } from "@root/data/users";
 import { useDispatch } from "react-redux";
 import counterSlice from "./features/counterSlice";
 import notificationSlice from "./features/notificationSlice";
+import notiStackSlice from "./features/notistackSlice";
 import userSlice, { addUser } from "./features/userSlice";
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
 		[counterSlice.name]: counterSlice.reducer,
 		[userSlice.name]: userSlice.reducer,
 		[notificationSlice.name]: notificationSlice.reducer,
+		[notiStackSlice.name]: notiStackSlice.reducer,
 	},
 	devTools: true,
 });

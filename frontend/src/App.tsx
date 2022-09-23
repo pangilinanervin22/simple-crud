@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import UserDeleteConfirmation from "./components/UserDeleteConfirmation";
 import Login from "./pages/Login";
-import MainPage from "./pages/MainPage";
+import MainPage from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import User from "./pages/User";
 import Users from "./pages/Users";
