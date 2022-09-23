@@ -2,17 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface myState {
-	open: boolean;
 	message: string;
-	typeColor: string;
-	status: string;
-	timeout: number;
+	variant: "error" | "success" | "warning" | "info";
 }
 
 const initialState = {
 	open: false,
 	message: "Hello World",
-	typeColor: "",
+	variant: "success",
 	status: "idle",
 	timeout: 2000,
 };
@@ -21,11 +18,10 @@ const notificationSlice = createSlice({
 	name: "notification",
 	initialState,
 	reducers: {
-		// showNotification(state, action: PayloadAction<myState>) {
-		// 	state.message = action.payload.message;
-		// },
-		showNotification(state) {
+		showNotification(state, action: PayloadAction<myState>) {
 			state.open = true;
+			state.message = action.payload.message;
+			state.variant = action.payload.variant;
 		},
 
 		closeNotification(state) {

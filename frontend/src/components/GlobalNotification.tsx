@@ -1,9 +1,10 @@
-import { Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import {
 	closeNotification,
 	selectNotificationState,
 	showNotification,
 } from "@root/app/features/notificationSlice";
+import { useEffect } from "react";
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -15,7 +16,7 @@ export default function GlobalNotification() {
 	console.log(notificationState);
 
 	const handleClick = () => {
-		dispatch(showNotification());
+		dispatch(showNotification({ message: "hey", variant: "error" }));
 	};
 
 	const handleClose = (
@@ -26,15 +27,24 @@ export default function GlobalNotification() {
 
 		dispatch(closeNotification());
 	};
+	useEffect(() => {
+		return () => {};
+	}, [notificationState]);
+
 	return (
 		<>
 			{/* <Button onClick={handleClick}>Open simple snackbar</Button> */}
+
 			<Snackbar
 				open={notificationState.open}
-				autoHideDuration={2000}
+				autoHideDuration={notificationState.timeout}
 				onClose={handleClose}
-				message="Note archived"
-			/>
+				key={notificationState.variant + notificationState.message}
+			>
+				<Alert severity={notificationState.variant || "error"}>
+					{notificationState.message}
+				</Alert>
+			</Snackbar>
 		</>
 	);
 }

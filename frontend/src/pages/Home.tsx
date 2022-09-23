@@ -30,14 +30,44 @@ export default function MainPage() {
 			<h1>Value : {data.count}</h1>
 			<button
 				onClick={() => {
-					dispatch(showNotification());
+					dispatch(
+						showNotification({
+							message: "hey",
+							variant: "success",
+						})
+					);
+
 					dispatch(increment());
 				}}
 			>
 				increment
 			</button>
-			<button onClick={() => dispatch(decrement())}>decrement</button>
-			<button>hello</button>
+			<button
+				onClick={() => {
+					dispatch(
+						showNotification({
+							message: "hey",
+							variant: "error",
+						})
+					);
+					dispatch(decrement());
+				}}
+			>
+				decrement
+			</button>
+			<button
+				onClick={() => {
+					dispatch(
+						showNotification({
+							message: "wew",
+							variant: "error",
+						})
+					);
+					dispatch(decrement());
+				}}
+			>
+				hello
+			</button>
 
 			<Notifiers />
 		</div>
