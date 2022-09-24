@@ -25,6 +25,7 @@ import {
 } from "@root/app/features/userSlice";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
+import { showNotification } from "@root/app/features/notificationSlice";
 
 const schema = Joi.object({
 	name: Joi.string().min(3).max(40).required().messages({
@@ -76,6 +77,12 @@ export default function User() {
 		else dispatch(updateUser({ ...data, id: params.id }));
 
 		handleOpenDialog();
+		dispatch(
+			showNotification({
+				message: "Successfully udpate a user",
+				variant: "success",
+			})
+		);
 	};
 
 	useEffect(() => {

@@ -19,12 +19,13 @@ export default function MainPage() {
 
 	return (
 		<div>
+			<h1> Testing ground for logic </h1>
 			<h1>Value : {data.count}</h1>
 			<button
 				onClick={() => {
 					dispatch(
 						showNotification({
-							message: "hey",
+							message: "Success notification sample ",
 							variant: "success",
 						})
 					);
@@ -38,7 +39,7 @@ export default function MainPage() {
 				onClick={() => {
 					dispatch(
 						showNotification({
-							message: "hey",
+							message: "Something wrong sample",
 							variant: "error",
 						})
 					);

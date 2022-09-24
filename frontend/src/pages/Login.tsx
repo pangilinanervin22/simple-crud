@@ -3,6 +3,8 @@ import { Grid, TextField } from "@mui/material";
 export default function Login() {
 	return (
 		<>
+			<h1> Testing ground for MUI </h1>
+
 			<h1>login</h1>
 			<Grid container columns={{ xs: 18, sm: 16, md: 12 }}>
 				<Grid item xs={6} sm={8} md={4} bgcolor="red">
@@ -26,6 +28,7 @@ export default function Login() {
 					3rd
 				</Grid>
 			</Grid>
+			<TextField label="Sample" sx={{ mt: 5 }}></TextField>
 		</>
 	);
 }

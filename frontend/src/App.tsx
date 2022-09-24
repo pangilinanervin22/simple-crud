@@ -3,11 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import GlobalNotification from "./components/GlobalNotification";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
-import UserDeleteConfirmation from "./components/UserDeleteConfirmation";
+import UserDeleteConfirmation from "./components/MainTable/UserDelete";
 import Login from "./pages/Login";
 import MainPage from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import User from "./pages/User";
+import User from "./components/MainTable/UserEdit";
 import Users from "./pages/Users";
 
 function App() {

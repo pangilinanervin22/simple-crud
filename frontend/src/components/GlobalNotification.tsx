@@ -34,7 +34,6 @@ export default function GlobalNotification() {
 	return (
 		<>
 			{/* <Button onClick={handleClick}>Open simple snackbar</Button> */}
-
 			<Snackbar
 				open={notificationState.open}
 				autoHideDuration={notificationState.timeout}
