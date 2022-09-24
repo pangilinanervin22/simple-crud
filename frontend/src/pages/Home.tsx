@@ -5,15 +5,7 @@ import {
 	selectCountState,
 } from "@root/app/features/counterSlice";
 import { showNotification } from "@root/app/features/notificationSlice";
-import {
-	addUser,
-	selectAllUsers,
-	userStatus,
-	selectUserById,
-	selectUserState,
-	updateUser,
-} from "@root/app/features/userSlice";
-import Notifiers from "@root/components/Notifier";
+import { userStatus } from "@root/app/features/userSlice";
 import { allUsers } from "@root/data/users";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -68,8 +60,6 @@ export default function MainPage() {
 			>
 				hello
 			</button>
-
-			<Notifiers />
 		</div>
 	);
 }
