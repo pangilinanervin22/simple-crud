@@ -65,8 +65,6 @@ export default function User() {
 	});
 
 	const onSubmit = (data: any) => {
-		console.log(!data);
-
 		if (!data || paramsId === "new")
 			dispatch(addUser({ ...data, id: nanoid() }));
 		else dispatch(updateUser({ ...data, id: paramsId }));

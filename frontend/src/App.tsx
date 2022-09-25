@@ -21,15 +21,15 @@ function App() {
 				<Box sx={{ width: "100%" }}>
 					<NavBar />
 					<Routes>
-						<Route path="users" element={<Users />}>
+						<Route path="/users" element={<Users />}>
 							<Route path=":id" element={<User />} />
 							<Route
-								path="delete/:id"
+								path="/delete/:id"
 								element={<UserDeleteConfirmation />}
 							/>
 						</Route>
 
-						<Route path="login" element={<Login />} />
+						<Route path="/login" element={<Login />} />
 						<Route path="" element={<MainPage />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
