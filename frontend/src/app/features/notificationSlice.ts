@@ -1,12 +1,21 @@
+import { AlertColor } from "@mui/material";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-interface myState {
+interface addingPayLoad {
 	message: string;
-	variant: "error" | "success" | "warning" | "info";
+	variant: AlertColor;
 }
 
-const initialState = {
+interface state {
+	message: string;
+	variant: AlertColor;
+	open: boolean;
+	status: string;
+	timeout: number;
+}
+
+const initialState: state = {
 	open: false,
 	message: "Hello World",
 	variant: "success",
@@ -18,7 +27,7 @@ const notificationSlice = createSlice({
 	name: "notification",
 	initialState,
 	reducers: {
-		showNotification(state, action: PayloadAction<myState>) {
+		showNotification(state, action: PayloadAction<addingPayLoad>) {
 			state.open = true;
 			state.message = action.payload.message;
 			state.variant = action.payload.variant;

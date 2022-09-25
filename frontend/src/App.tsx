@@ -1,4 +1,4 @@
-import { Paper, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import GlobalNotification from "./components/GlobalNotification";
 import NavBar from "./components/NavBar";

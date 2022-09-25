@@ -6,8 +6,8 @@ import {
 	Button,
 	Box,
 } from "@mui/material";
-import { showNotification } from "@root/app/features/notificationSlice";
-import { deleteUser } from "@root/app/features/userSlice";
+import { showNotification } from "../../app/features/notificationSlice";
+import { deleteUser } from "../../app/features/userSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";

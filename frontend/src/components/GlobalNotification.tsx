@@ -2,22 +2,16 @@ import { Alert, Snackbar } from "@mui/material";
 import {
 	closeNotification,
 	selectNotificationState,
-	showNotification,
-} from "@root/app/features/notificationSlice";
-import { useEffect } from "react";
+} from "../app/features/notificationSlice";
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 export default function GlobalNotification() {
-	const notificationState = useSelector(selectNotificationState);
+	const notification = useSelector(selectNotificationState);
 	const dispatch = useDispatch();
 
-	console.log(notificationState);
-
-	const handleClick = () => {
-		dispatch(showNotification({ message: "hey", variant: "error" }));
-	};
+	console.log(notification);
 
 	const handleClose = (
 		event: React.SyntheticEvent | Event,
@@ -27,21 +21,18 @@ export default function GlobalNotification() {
 
 		dispatch(closeNotification());
 	};
-	useEffect(() => {
-		return () => {};
-	}, [notificationState]);
 
 	return (
 		<>
 			{/* <Button onClick={handleClick}>Open simple snackbar</Button> */}
 			<Snackbar
-				open={notificationState.open}
-				autoHideDuration={notificationState.timeout}
+				open={notification.open}
+				autoHideDuration={notification.timeout}
 				onClose={handleClose}
-				key={notificationState.variant + notificationState.message}
+				key={notification.variant + notification.message}
 			>
-				<Alert severity={notificationState.variant || "error"}>
-					{notificationState.message}
+				<Alert severity={notification.variant}>
+					{notification.message}
 				</Alert>
 			</Snackbar>
 		</>

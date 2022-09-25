@@ -3,9 +3,8 @@ import {
 	createSlice,
 	PayloadAction,
 } from "@reduxjs/toolkit";
-import { Users } from "@root/types";
-import store, { RootState } from "../store";
-import { decrement, increment } from "./counterSlice";
+import { Users } from "../../types";
+import { RootState } from "../store";
 
 const userAdapter = createEntityAdapter<Users>({
 	selectId: (user) => user.id,

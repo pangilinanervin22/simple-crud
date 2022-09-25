@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { allUsers } from "@root/data/users";
 import { useDispatch } from "react-redux";
 import counterSlice from "./features/counterSlice";
 import notificationSlice from "./features/notificationSlice";
 import userSlice, { addUser } from "./features/userSlice";
+import { allUsers } from "./users";
 
 const store = configureStore({
 	reducer: {

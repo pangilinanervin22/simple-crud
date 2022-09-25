@@ -1,4 +1,4 @@
-import MainTable from "@root/components/MainTable/index";
+import MainTable from "../components/MainTable";
 import { Outlet } from "react-router-dom";
 
 export default function Users() {

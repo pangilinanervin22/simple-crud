@@ -6,9 +6,7 @@ import {
 	TableContainer,
 	TableRow,
 } from "@mui/material";
-import { deleteUser } from "@root/app/features/userSlice";
-import { Column, Users } from "@root/types";
-import { useDispatch } from "react-redux";
+import { Users, Column } from "../../types";
 import { useNavigate } from "react-router-dom";
 
 interface UserBodyTableProps {
@@ -18,7 +16,6 @@ interface UserBodyTableProps {
 
 export default function UserBodyTable({ content, base }: UserBodyTableProps) {
 	const redirect = useNavigate();
-	const dispatch = useDispatch();
 
 	return (
 		<>
@@ -31,7 +28,7 @@ export default function UserBodyTable({ content, base }: UserBodyTableProps) {
 									<TableCell
 										width="18%"
 										align={base.align}
-										key={base.path || base.label}
+										key={String(base.path)}
 									>
 										{renderCellBody(item, base)}
 									</TableCell>

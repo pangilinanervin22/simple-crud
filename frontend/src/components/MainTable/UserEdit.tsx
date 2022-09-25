@@ -8,6 +8,7 @@ import {
 	Box,
 	Grid,
 	MenuItem,
+	FormControl,
 } from "@mui/material";
 
 import Joi from "joi";
@@ -15,17 +16,11 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import _ from "lodash";
 import { useSelector } from "react-redux";
-import {
-	addUser,
-	selectUserById,
-	updateUser,
-	userById,
-} from "@root/app/features/userSlice";
+import { addUser, updateUser, userById } from "../../app/features/userSlice";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
-import { showNotification } from "@root/app/features/notificationSlice";
+import { showNotification } from "../../app/features/notificationSlice";
 
 const schema = Joi.object({
 	name: Joi.string().min(3).max(40).required().messages({
@@ -52,11 +47,11 @@ const schema = Joi.object({
 export default function User() {
 	const dispatch = useDispatch();
 	const redirect = useNavigate();
-	const params = useParams();
+	const { paramsId } = useParams<{ paramsId: string }>();
 
 	const [isOpen, setIsOpen] = useState(true);
-	const data = useSelector((state: any) => userById(state, params.id));
-	const currentObject = !data || params.id === "new" ? {} : data;
+	const data = useSelector((state: any) => userById(state, paramsId!));
+	const currentObject: any = !data || paramsId === "new" ? {} : data;
 
 	console.log(currentObject);
 
@@ -70,16 +65,16 @@ export default function User() {
 	});
 
 	const onSubmit = (data: any) => {
-		console.log(params, !data);
+		console.log(!data);
 
-		if (!data || params.id === "new")
+		if (!data || paramsId === "new")
 			dispatch(addUser({ ...data, id: nanoid() }));
-		else dispatch(updateUser({ ...data, id: params.id }));
+		else dispatch(updateUser({ ...data, id: paramsId }));
 
 		handleOpenDialog();
 		dispatch(
 			showNotification({
-				message: "Successfully udpate a user",
+				message: "Successfully update a user",
 				variant: "success",
 			})
 		);
@@ -97,10 +92,10 @@ export default function User() {
 		<>
 			<Dialog open={isOpen} onClose={() => {}} maxWidth="lg">
 				<DialogTitle>
-					{params.id == "new" ? "Add new movie" : "Edit movie"}
+					{paramsId == "new" ? "Add new movie" : "Edit movie"}
 				</DialogTitle>
 				<DialogContent sx={{ margin: "20px" }}>
-					<form onSubmit={handleSubmit(onSubmit)}>
+					<FormControl onSubmit={handleSubmit(onSubmit)}>
 						<Box
 							sx={{
 								display: "flex",
@@ -114,8 +109,10 @@ export default function User() {
 										required
 										type="text"
 										label="Name"
-										helperText={errors.name?.message}
-										error={errors.name?.message}
+										helperText={String(
+											errors.name?.message
+										)}
+										error={Boolean(errors.name?.message)}
 										{...register("name")}
 										fullWidth
 										margin="normal"
@@ -127,8 +124,8 @@ export default function User() {
 										type="number"
 										label="Age"
 										minLength="3"
-										helperText={errors.age?.message}
-										error={errors.age?.message}
+										helperText={String(errors.age?.message)}
+										error={Boolean(errors.age?.message)}
 										{...register("age")}
 										fullWidth
 										margin="normal"
@@ -141,8 +138,8 @@ export default function User() {
 								required
 								select
 								defaultValue={currentObject?.gender || ""}
-								helperText={errors.gender?.message}
-								error={errors.gender?.message}
+								helperText={String(errors.gender?.message)}
+								error={Boolean(errors.gender?.message)}
 								{...register("gender")}
 								margin="normal"
 							>
@@ -156,8 +153,8 @@ export default function User() {
 								type="text"
 								label="Position"
 								minLength="3"
-								helperText={errors.position?.message}
-								error={errors.position?.message}
+								helperText={String(errors.position?.message)}
+								error={Boolean(errors.position?.message)}
 								{...register("position")}
 								margin="normal"
 							/>
@@ -193,7 +190,7 @@ export default function User() {
 								</Button>
 							</DialogActions>
 						</Box>
-					</form>
+					</FormControl>
 				</DialogContent>
 			</Dialog>
 		</>

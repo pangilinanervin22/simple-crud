@@ -5,17 +5,16 @@ import {
 	TableSortLabel,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import UserHeaderTable from "./UserHeaderTable";
 import UserToolTable from "./UserToolTable";
-import { Column } from "@root/types";
+import { Column, Users } from "../../types";
 import UserBodyTable from "./UserBodyTable";
-import { paginate } from "@root/utils/paginate";
-import { sortPath } from "@root/utils/sortPath";
-import { useDispatch, useSelector } from "react-redux";
+import { paginate } from "../../utils/paginate";
+import { sortPath } from "../../utils/sortPath";
+import { useSelector } from "react-redux";
 
-import { selectAllUsers } from "@root/app/features/userSlice";
-import { CurrencyYenTwoTone } from "@mui/icons-material";
+import { selectAllUsers } from "../../app/features/userSlice";
 
 const Columns: Column[] = [
 	{ label: "Name", path: "name", align: "left" },
@@ -33,20 +32,22 @@ export default function MainTable() {
 	});
 
 	const [searchQuery, setSearchQuery] = useState("");
-	const [sortColumn, setSortColumn] = useState({
+	const [sortColumn, setSortColumn] = useState<{
+		path: string;
+		order: "asc" | "desc";
+	}>({
 		path: "name",
 		order: "asc",
 	});
 
 	const { current, size } = page;
-
 	let sortedData = [...data];
 
 	console.time("timer");
 	//sorting by search query filter
 	sortedData = useMemo(
 		() =>
-			data.filter((item) =>
+			data.filter((item: Users) =>
 				item.name.toLowerCase().includes(searchQuery.toLowerCase())
 			),
 		[searchQuery, data]

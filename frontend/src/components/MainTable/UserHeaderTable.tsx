@@ -1,5 +1,5 @@
 import { Table, TableCell, TableHead, TableRow, useTheme } from "@mui/material";
-import { Column } from "@root/types";
+import { Column } from "../../types";
 
 const UserHeaderTable = ({
 	base,

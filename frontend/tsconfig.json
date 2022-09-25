@@ -26,11 +26,7 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "data"
   ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
 }

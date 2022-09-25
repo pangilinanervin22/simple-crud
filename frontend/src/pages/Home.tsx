@@ -3,10 +3,9 @@ import {
 	decrement,
 	increment,
 	selectCountState,
-} from "@root/app/features/counterSlice";
-import { showNotification } from "@root/app/features/notificationSlice";
-import { userStatus } from "@root/app/features/userSlice";
-import { allUsers } from "@root/data/users";
+} from "../app/features/counterSlice";
+import { showNotification } from "../app/features/notificationSlice";
+import { userStatus } from "../app/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function MainPage() {
