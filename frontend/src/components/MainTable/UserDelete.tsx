@@ -19,8 +19,6 @@ export default function UserDeleteConfirmation() {
 	const dispatch = useDispatch();
 	const redirect = useNavigate();
 
-	console.log(params.id);
-
 	return (
 		<>
 			<Dialog open={isOpen} maxWidth="lg">
@@ -56,8 +54,8 @@ export default function UserDeleteConfirmation() {
 	);
 
 	function handleConfirm() {
-		dispatch(deleteUser(params.id));
 		handleActions();
+		dispatch(deleteUser(params.id));
 		dispatch(
 			showNotification({
 				message: "Successfully delete a user",
@@ -67,7 +65,9 @@ export default function UserDeleteConfirmation() {
 	}
 
 	function handleActions() {
-		setIsOpen(false);
+		console.log(params);
+
 		redirect("../", { replace: true });
+		setIsOpen(false);
 	}
 }

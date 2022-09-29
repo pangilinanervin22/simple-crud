@@ -14,7 +14,7 @@ import {
 import Joi from "joi";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useNavigate, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { addUser, updateUser, userById } from "../../app/features/userSlice";
@@ -47,13 +47,11 @@ const schema = Joi.object({
 export default function User() {
 	const dispatch = useDispatch();
 	const redirect = useNavigate();
-	const { paramsId } = useParams<{ paramsId: string }>();
+	const { id: paramsId } = useParams<{ id: string }>();
 
 	const [isOpen, setIsOpen] = useState(true);
 	const data = useSelector((state: any) => userById(state, paramsId!));
 	const currentObject: any = !data || paramsId === "new" ? {} : data;
-
-	console.log(currentObject);
 
 	const {
 		register,
@@ -86,6 +84,8 @@ export default function User() {
 		}
 	}, []);
 
+	console.log(errors);
+
 	return (
 		<>
 			<Dialog open={isOpen} onClose={() => {}} maxWidth="lg">
@@ -93,7 +93,7 @@ export default function User() {
 					{paramsId == "new" ? "Add new movie" : "Edit movie"}
 				</DialogTitle>
 				<DialogContent sx={{ margin: "20px" }}>
-					<FormControl onSubmit={handleSubmit(onSubmit)}>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<Box
 							sx={{
 								display: "flex",
@@ -107,9 +107,11 @@ export default function User() {
 										required
 										type="text"
 										label="Name"
-										helperText={String(
-											errors.name?.message
-										)}
+										helperText={
+											Boolean(errors.age?.message)
+												? String(errors.name?.message)
+												: ""
+										}
 										error={Boolean(errors.name?.message)}
 										{...register("name")}
 										fullWidth
@@ -122,7 +124,11 @@ export default function User() {
 										type="number"
 										label="Age"
 										minLength="3"
-										helperText={String(errors.age?.message)}
+										helperText={
+											Boolean(errors.age?.message)
+												? String(errors.age?.message)
+												: ""
+										}
 										error={Boolean(errors.age?.message)}
 										{...register("age")}
 										fullWidth
@@ -136,7 +142,11 @@ export default function User() {
 								required
 								select
 								defaultValue={currentObject?.gender || ""}
-								helperText={String(errors.gender?.message)}
+								helperText={
+									Boolean(errors.gender?.message)
+										? String(errors.gender?.message)
+										: ""
+								}
 								error={Boolean(errors.gender?.message)}
 								{...register("gender")}
 								margin="normal"
@@ -151,7 +161,11 @@ export default function User() {
 								type="text"
 								label="Position"
 								minLength="3"
-								helperText={String(errors.position?.message)}
+								helperText={
+									Boolean(errors.position?.message)
+										? String(errors.position?.message)
+										: ""
+								}
 								error={Boolean(errors.position?.message)}
 								{...register("position")}
 								margin="normal"
@@ -188,14 +202,14 @@ export default function User() {
 								</Button>
 							</DialogActions>
 						</Box>
-					</FormControl>
+					</form>
 				</DialogContent>
 			</Dialog>
 		</>
 	);
 
 	function handleOpenDialog() {
-		setIsOpen(false);
 		redirect("../", { replace: true });
+		setIsOpen(false);
 	}
 }

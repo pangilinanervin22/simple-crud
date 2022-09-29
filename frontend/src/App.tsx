@@ -1,10 +1,5 @@
 import { Box } from "@mui/material";
-import {
-	createBrowserRouter,
-	Route,
-	RouterProvider,
-	Routes,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import GlobalNotification from "./components/GlobalNotification";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -26,13 +21,13 @@ function App() {
 				<Box sx={{ width: "100%" }}>
 					<NavBar />
 					<Routes>
-						<Route path="/users" element={<Users />}>
+						<Route path="/users/" element={<Users />}>
+							<Route
+								path="delete/:id"
+								element={<UserDeleteConfirmation />}
+							/>
 							<Route path=":id" element={<User />} />
 						</Route>
-						<Route
-							path="/delete/:id"
-							element={<UserDeleteConfirmation />}
-						/>
 
 						<Route path="/login" element={<Login />} />
 						<Route path="" element={<MainPage />} />
