@@ -1,5 +1,10 @@
 import { Box } from "@mui/material";
-import { Route, Routes } from "react-router-dom";
+import {
+	createBrowserRouter,
+	Route,
+	RouterProvider,
+	Routes,
+} from "react-router-dom";
 import GlobalNotification from "./components/GlobalNotification";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -23,11 +28,11 @@ function App() {
 					<Routes>
 						<Route path="/users" element={<Users />}>
 							<Route path=":id" element={<User />} />
-							<Route
-								path="/delete/:id"
-								element={<UserDeleteConfirmation />}
-							/>
 						</Route>
+						<Route
+							path="/delete/:id"
+							element={<UserDeleteConfirmation />}
+						/>
 
 						<Route path="/login" element={<Login />} />
 						<Route path="" element={<MainPage />} />
