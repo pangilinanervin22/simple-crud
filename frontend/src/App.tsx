@@ -11,17 +11,15 @@ import User from "./components/MainTable/UserEdit";
 import Users from "./pages/Users";
 
 function App() {
-	console.log(" render app");
-
 	return (
 		<>
 			<Box sx={{ position: "relative", display: "flex" }}>
-				<SideBar />
+				{/* <SideBar /> */}
 				<GlobalNotification />
 				<Box sx={{ width: "100%" }}>
 					<NavBar />
 					<Routes>
-						<Route path="/users/" element={<Users />}>
+						<Route path="/" element={<Users />}>
 							<Route
 								path="delete/:id"
 								element={<UserDeleteConfirmation />}
@@ -29,9 +27,9 @@ function App() {
 							<Route path=":id" element={<User />} />
 						</Route>
 
-						<Route path="/login" element={<Login />} />
+						{/* <Route path="/login" element={<Login />} />
 						<Route path="" element={<MainPage />} />
-						<Route path="*" element={<NotFound />} />
+						<Route path="*" element={<NotFound />} /> */}
 					</Routes>
 				</Box>
 			</Box>

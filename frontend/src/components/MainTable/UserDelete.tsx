@@ -7,10 +7,11 @@ import {
 	Box,
 } from "@mui/material";
 import { showNotification } from "../../app/features/notificationSlice";
-import { deleteUser } from "../../app/features/userSlice";
+import { deleteUser, userById } from "../../app/features/userSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function UserDeleteConfirmation() {
 	const [isOpen, setIsOpen] = useState(true);
@@ -18,6 +19,7 @@ export default function UserDeleteConfirmation() {
 	const params = useParams();
 	const dispatch = useDispatch();
 	const redirect = useNavigate();
+	const data = useSelector((state: any) => userById(state, params.id!));
 
 	return (
 		<>
@@ -58,15 +60,13 @@ export default function UserDeleteConfirmation() {
 		dispatch(deleteUser(params.id));
 		dispatch(
 			showNotification({
-				message: "Successfully delete a user",
+				message: "Successfully delete " + data?.name,
 				variant: "success",
 			})
 		);
 	}
 
 	function handleActions() {
-		console.log(params);
-
 		redirect("../", { replace: true });
 		setIsOpen(false);
 	}

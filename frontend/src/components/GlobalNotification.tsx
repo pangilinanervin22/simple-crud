@@ -11,8 +11,6 @@ export default function GlobalNotification() {
 	const notification = useSelector(selectNotificationState);
 	const dispatch = useDispatch();
 
-	console.log(notification);
-
 	const handleClose = (
 		event: React.SyntheticEvent | Event,
 		reason?: string

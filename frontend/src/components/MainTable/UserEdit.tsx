@@ -67,13 +67,16 @@ export default function User() {
 			dispatch(addUser({ ...data, id: nanoid() }));
 		else dispatch(updateUser({ ...data, id: paramsId }));
 
-		handleOpenDialog();
 		dispatch(
 			showNotification({
-				message: "Successfully update a user",
+				message:
+					paramsId === "new"
+						? "Successfully added new data"
+						: "Successfully update " + data.name,
 				variant: "success",
 			})
 		);
+		handleOpenDialog();
 	};
 
 	useEffect(() => {

@@ -1,4 +1,4 @@
-import { Box, AppBar } from "@mui/material";
+import { Box, AppBar, Typography } from "@mui/material";
 
 export default function NavBar() {
 	return (
@@ -7,11 +7,11 @@ export default function NavBar() {
 			sx={{
 				width: "100%",
 				position: "static",
-				height: "50px",
-				textAlign: "center",
+				textAlign: "left",
+				padding: " 10px  20px",
 			}}
 		>
-			Hello World
+			<Typography variant="h5"> Simple Crud</Typography>
 		</AppBar>
 	);
 }

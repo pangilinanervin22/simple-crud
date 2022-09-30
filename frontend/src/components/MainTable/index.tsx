@@ -15,6 +15,7 @@ import { sortPath } from "../../utils/sortPath";
 import { useSelector } from "react-redux";
 
 import { selectAllUsers } from "../../app/features/userSlice";
+import theme from "../../mui/themes";
 
 const Columns: Column[] = [
 	{ label: "Name", path: "name", align: "left" },
@@ -43,7 +44,6 @@ export default function MainTable() {
 	const { current, size } = page;
 	let sortedData = [...data];
 
-	console.time("timer");
 	//sorting by search query filter
 	sortedData = useMemo(
 		() =>
@@ -71,8 +71,6 @@ export default function MainTable() {
 		[page, data]
 	);
 
-	console.timeEnd("timer");
-
 	return (
 		<>
 			<Paper
@@ -99,7 +97,7 @@ export default function MainTable() {
 				)}
 				<TablePagination
 					component="div"
-					sx={{ background: "#1498C1" }}
+					sx={{ background: theme.palette.primary.main }}
 					page={current}
 					count={sizeData}
 					rowsPerPage={size}
