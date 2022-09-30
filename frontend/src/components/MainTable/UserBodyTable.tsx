@@ -19,7 +19,7 @@ export default function UserBodyTable({ content, base }: UserBodyTableProps) {
 
 	return (
 		<>
-			<TableContainer sx={{ height: "350px" }}>
+			<TableContainer>
 				<Table size="medium">
 					<TableBody>
 						{content.map((item) => (
