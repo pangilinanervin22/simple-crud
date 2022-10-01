@@ -85,7 +85,10 @@ export default function MainTable() {
 					overflow: "hidden",
 				}}
 			>
-				<UserToolTable handleSearch={handleSearch} />
+				<UserToolTable
+					handleSearch={handleSearch}
+					checkList={checkList}
+				/>
 				<UserHeaderTable base={Columns} render={renderCellHeader} />
 				{sortedData.length === 0 ? (
 					<Box

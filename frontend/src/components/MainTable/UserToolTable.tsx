@@ -8,11 +8,17 @@ import {
 import {
 	Search as SearchIcon,
 	Refresh as RefreshIcon,
+	Delete,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { memo } from "react";
 
-const UserToolTable = ({ handleSearch }: { handleSearch: Function }) => {
+interface UserToolTableProps {
+	handleSearch: Function;
+	checkList: string[];
+}
+
+const UserToolTable = ({ handleSearch, checkList }: UserToolTableProps) => {
 	const redirect = useNavigate();
 
 	console.log("render");
@@ -39,6 +45,14 @@ const UserToolTable = ({ handleSearch }: { handleSearch: Function }) => {
 					}}
 				/>
 				<Box>
+					<IconButton
+						size="medium"
+						color="primary"
+						disabled={checkList.length === 0}
+						onClick={() => console.log(checkList)}
+					>
+						<Delete fontSize="large" />
+					</IconButton>
 					<IconButton size="medium" color="primary">
 						<RefreshIcon fontSize="large" />
 					</IconButton>

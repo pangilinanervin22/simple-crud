@@ -22,7 +22,7 @@ const initialState: state = {
 	variant: "success",
 	status: "idle",
 	timeout: 2000,
-	actionClick: () => console.log("sample"),
+	actionClick: () => console.log(),
 };
 
 const confirmationSlice = createSlice({

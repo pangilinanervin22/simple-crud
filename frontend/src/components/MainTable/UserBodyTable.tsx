@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Users, Column } from "../../types";
 import { useNavigate } from "react-router-dom";
-import { ChangeEvent } from "react";
 
 interface UserBodyTableProps {
 	content: Users[];

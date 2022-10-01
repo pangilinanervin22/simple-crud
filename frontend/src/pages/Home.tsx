@@ -7,6 +7,7 @@ import {
 import { showNotification } from "../app/features/notificationSlice";
 import { userStatus } from "../app/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { showConfirmation } from "../app/features/confirmationSlice";
 
 export default function MainPage() {
 	const data = useSelector(selectCountState);
@@ -14,7 +15,7 @@ export default function MainPage() {
 
 	const status = useSelector(userStatus);
 
-	console.log(status, 2);
+	// console.log(status, 2);
 
 	return (
 		<div>
@@ -22,14 +23,19 @@ export default function MainPage() {
 			<h1>Value : {data.count}</h1>
 			<button
 				onClick={() => {
+					dispatch(increment());
 					dispatch(
 						showNotification({
 							message: "Success notification sample ",
 							variant: "success",
 						})
 					);
-
-					dispatch(increment());
+					dispatch(
+						showConfirmation({
+							message: "Hello Sample",
+							actionClick: () => console.log(data.count),
+						})
+					);
 				}}
 			>
 				increment
