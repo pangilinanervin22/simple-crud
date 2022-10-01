@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
+import confirmationSlice from "./features/confirmationSlice";
 import counterSlice from "./features/counterSlice";
 import notificationSlice from "./features/notificationSlice";
 import userSlice, { addUser } from "./features/userSlice";
@@ -10,6 +11,7 @@ const store = configureStore({
 		[counterSlice.name]: counterSlice.reducer,
 		[userSlice.name]: userSlice.reducer,
 		[notificationSlice.name]: notificationSlice.reducer,
+		[confirmationSlice.name]: confirmationSlice.reducer,
 	},
 	devTools: true,
 });
