@@ -13,11 +13,16 @@ const UserHeaderTable = ({
 	return (
 		<>
 			<Table>
-				<TableHead sx={{ background: theme.palette.primary.main }}>
+				<TableHead
+					sx={{
+						background: theme.palette.primary.main,
+					}}
+				>
 					<TableRow>
 						{base.map((item) => (
 							<TableCell
-								width="18%"
+								sx={{ fontSize: "18px", fontWeight: "bold" }}
+								width={item.width}
 								key={item.path}
 								align={item.align}
 							>
@@ -26,7 +31,7 @@ const UserHeaderTable = ({
 						))}
 						<TableCell
 							align="right"
-							width="auto"
+							width="20%"
 							sx={{ fontSize: "20px" }}
 						>
 							{"Action"}

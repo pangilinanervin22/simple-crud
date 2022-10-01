@@ -1,5 +1,6 @@
 import {
 	Button,
+	Checkbox,
 	Table,
 	TableBody,
 	TableCell,
@@ -8,13 +9,21 @@ import {
 } from "@mui/material";
 import { Users, Column } from "../../types";
 import { useNavigate } from "react-router-dom";
+import { ChangeEvent } from "react";
 
 interface UserBodyTableProps {
 	content: Users[];
 	base: Column[];
+	onCheck: any;
+	checkList: string[];
 }
 
-export default function UserBodyTable({ content, base }: UserBodyTableProps) {
+export default function UserBodyTable({
+	content,
+	base,
+	onCheck,
+	checkList,
+}: UserBodyTableProps) {
 	const redirect = useNavigate();
 
 	return (
@@ -26,18 +35,18 @@ export default function UserBodyTable({ content, base }: UserBodyTableProps) {
 							<TableRow key={item.id}>
 								{base.map((base) => (
 									<TableCell
-										width="18%"
-										align={base.align}
 										key={String(base.path)}
+										align={base.align}
+										width={base.width || "auto"}
 									>
 										{renderCellBody(item, base)}
 									</TableCell>
 								))}
-								<TableCell align={"right"} width="auto">
+								<TableCell align={"right"} width="20%">
 									<Button
+										size="small"
 										color="info"
 										variant="contained"
-										size="small"
 										onClick={() =>
 											redirect(item.id, {
 												replace: true,
@@ -47,9 +56,9 @@ export default function UserBodyTable({ content, base }: UserBodyTableProps) {
 										Edit
 									</Button>
 									<Button
+										size="small"
 										color="error"
 										variant="contained"
-										size="small"
 										onClick={() =>
 											redirect(`delete/${item.id}`, {
 												replace: true,
@@ -68,6 +77,16 @@ export default function UserBodyTable({ content, base }: UserBodyTableProps) {
 	);
 
 	function renderCellBody(item: any, base: any) {
+		if (base.path === "name")
+			return (
+				<>
+					<Checkbox
+						checked={checkList.includes(item.id)}
+						onChange={(e, isCheck) => onCheck(isCheck, item.id)}
+					/>
+					{item[base.path]}
+				</>
+			);
 		return item[base.path];
 	}
 }

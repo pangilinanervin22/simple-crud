@@ -57,13 +57,13 @@ export default function SideBar() {
 				indicatorColor="primary"
 			>
 				<Tab
-					value=""
+					value="home"
 					label="Home"
 					icon={<Home fontSize="large" />}
 					iconPosition={"start"}
 				/>
 				<Tab
-					value="users"
+					value=""
 					label="Table"
 					icon={<TableChart />}
 					iconPosition={"start"}

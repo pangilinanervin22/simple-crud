@@ -1,11 +1,14 @@
 import {
+	Checkbox,
+	CheckboxClassKey,
+	CheckboxProps,
 	CircularProgress,
 	Paper,
 	TablePagination,
 	TableSortLabel,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useMemo, useState } from "react";
+import { SyntheticEvent, useMemo, useState } from "react";
 import UserHeaderTable from "./UserHeaderTable";
 import UserToolTable from "./UserToolTable";
 import { Column, Users } from "../../types";
@@ -18,10 +21,10 @@ import { selectAllUsers } from "../../app/features/userSlice";
 import theme from "../../mui/themes";
 
 const Columns: Column[] = [
-	{ label: "Name", path: "name", align: "left" },
-	{ label: "Age", path: "age", align: "right" },
-	{ label: "Position", path: "position", align: "right" },
-	{ label: "Gender", path: "gender", align: "right" },
+	{ label: "Name", path: "name", align: "left", width: "auto" },
+	{ label: "Age", path: "age", align: "right", width: "10%" },
+	{ label: "Position", path: "position", align: "right", width: "20%" },
+	{ label: "Gender", path: "gender", align: "right", width: "15%" },
 ];
 
 export default function MainTable() {
@@ -32,6 +35,7 @@ export default function MainTable() {
 		size: 5,
 	});
 
+	const [checkList, setCheckList] = useState<string[]>([]);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [sortColumn, setSortColumn] = useState<{
 		path: string;
@@ -93,7 +97,12 @@ export default function MainTable() {
 						<CircularProgress />
 					</Box>
 				) : (
-					<UserBodyTable content={sortedData} base={Columns} />
+					<UserBodyTable
+						base={Columns}
+						content={sortedData}
+						onCheck={addCheckList}
+						checkList={checkList}
+					/>
 				)}
 				<TablePagination
 					component="div"
@@ -143,6 +152,14 @@ export default function MainTable() {
 			...page,
 			current: 0,
 		});
+	}
+
+	function addCheckList(isCheck: boolean, id: string) {
+		const temp = [...checkList];
+		if (isCheck) temp.push(id);
+		else temp.splice(temp.indexOf(id), 1);
+
+		setCheckList([...temp]);
 	}
 
 	function renderCellHeader(item: Column) {

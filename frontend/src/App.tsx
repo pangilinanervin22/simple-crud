@@ -21,7 +21,7 @@ function App() {
 	return (
 		<>
 			<Box sx={{ position: "relative", display: "flex" }}>
-				{/* <SideBar /> */}
+				<SideBar />
 				<GlobalNotification />
 				<Box sx={{ width: "100%" }}>
 					<NavBar />
@@ -46,9 +46,9 @@ function App() {
 								<Route path=":id" element={<UserEdit />} />
 							</Route>
 
-							{/* <Route path="/login" element={<Login />} />
-					<Route path="" element={<MainPage />} />
-					<Route path="*" element={<NotFound />} /> */}
+							<Route path="/login" element={<Login />} />
+							<Route path="/home" element={<MainPage />} />
+							<Route path="*" element={<NotFound />} />
 						</Routes>
 					</React.Suspense>
 				</Box>
