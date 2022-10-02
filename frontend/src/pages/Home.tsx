@@ -7,7 +7,7 @@ import {
 import { showNotification } from "../app/features/notificationSlice";
 import { userStatus } from "../app/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { showConfirmation } from "../app/features/confirmationSlice";
+import { addConfirmation } from "../app/features/confirmationSlice";
 
 export default function MainPage() {
 	const data = useSelector(selectCountState);
@@ -31,7 +31,7 @@ export default function MainPage() {
 						})
 					);
 					dispatch(
-						showConfirmation({
+						addConfirmation({
 							message: "Hello Sample",
 							actionClick: () => console.log(data.count),
 						})

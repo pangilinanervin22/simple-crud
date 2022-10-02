@@ -17,8 +17,11 @@ import { paginate } from "../../utils/paginate";
 import { sortPath } from "../../utils/sortPath";
 import { useSelector } from "react-redux";
 
-import { selectAllUsers } from "../../app/features/userSlice";
+import { deleteManyUser, selectAllUsers } from "../../app/features/userSlice";
 import theme from "../../mui/themes";
+import { useDispatch } from "react-redux";
+import { addConfirmation } from "../../app/features/confirmationSlice";
+import { showNotification } from "../../app/features/notificationSlice";
 
 const Columns: Column[] = [
 	{ label: "Name", path: "name", align: "left", width: "auto" },
@@ -28,6 +31,7 @@ const Columns: Column[] = [
 ];
 
 export default function MainTable() {
+	const dispatch = useDispatch();
 	const data = useSelector(selectAllUsers);
 
 	const [page, setPage] = useState({
@@ -87,6 +91,7 @@ export default function MainTable() {
 			>
 				<UserToolTable
 					handleSearch={handleSearch}
+					handleTrash={handleTrash}
 					checkList={checkList}
 				/>
 				<UserHeaderTable base={Columns} render={renderCellHeader} />
@@ -163,6 +168,28 @@ export default function MainTable() {
 		else temp.splice(temp.indexOf(id), 1);
 
 		setCheckList([...temp]);
+	}
+
+	function handleTrash() {
+		dispatch(
+			addConfirmation({
+				message: "Are you sure you want to delete this users?",
+				actionClick: () => {
+					setCheckList([]);
+					setPage({
+						...page,
+						current: 0,
+					});
+					dispatch(deleteManyUser(checkList));
+					dispatch(
+						showNotification({
+							message: "Successfully delete many users",
+							variant: "success",
+						})
+					);
+				},
+			})
+		);
 	}
 
 	function renderCellHeader(item: Column) {

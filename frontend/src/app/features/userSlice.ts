@@ -24,6 +24,9 @@ const userSlice = createSlice({
 		deleteUser(state, action) {
 			userAdapter.removeOne(state, action.payload);
 		},
+		deleteManyUser(state, action) {
+			userAdapter.removeMany(state, action.payload);
+		},
 		updateUser(state, action) {
 			userAdapter.upsertOne(state, action.payload);
 		},
@@ -36,7 +39,8 @@ export const {
 	selectTotal: selectTotalUser,
 } = userAdapter.getSelectors((state: RootState) => state.user);
 
-export const { addUser, deleteUser, updateUser } = userSlice.actions;
+export const { addUser, deleteUser, updateUser, deleteManyUser } =
+	userSlice.actions;
 
 export const userStatus = (state: RootState) => state.user.status;
 export const userById = (state: RootState, id: string) =>

@@ -11,15 +11,23 @@ import {
 	Delete,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { memo } from "react";
+import { EventHandler, memo, MouseEventHandler } from "react";
+import { useDispatch } from "react-redux";
+import { deleteManyUser } from "../../app/features/userSlice";
 
 interface UserToolTableProps {
 	handleSearch: Function;
+	handleTrash: MouseEventHandler;
 	checkList: string[];
 }
 
-const UserToolTable = ({ handleSearch, checkList }: UserToolTableProps) => {
+const UserToolTable = ({
+	handleSearch,
+	handleTrash,
+	checkList,
+}: UserToolTableProps) => {
 	const redirect = useNavigate();
+	const dispatch = useDispatch();
 
 	console.log("render");
 
@@ -45,11 +53,13 @@ const UserToolTable = ({ handleSearch, checkList }: UserToolTableProps) => {
 					}}
 				/>
 				<Box>
+					{checkList.length == 0 ||
+						"Selected Users: " + checkList.length}
 					<IconButton
 						size="medium"
 						color="primary"
 						disabled={checkList.length === 0}
-						onClick={() => console.log(checkList)}
+						onClick={handleTrash}
 					>
 						<Delete fontSize="large" />
 					</IconButton>

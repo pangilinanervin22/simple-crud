@@ -29,7 +29,7 @@ const confirmationSlice = createSlice({
 	name: "confirmation",
 	initialState,
 	reducers: {
-		showConfirmation(state, action: PayloadAction<addingPayLoad>) {
+		addConfirmation(state, action: PayloadAction<addingPayLoad>) {
 			const { message, actionClick } = action.payload;
 			state.open = true;
 			state.message = message;
@@ -42,8 +42,7 @@ const confirmationSlice = createSlice({
 	},
 });
 
-export const { showConfirmation, closeConfirmation } =
-	confirmationSlice.actions;
+export const { addConfirmation, closeConfirmation } = confirmationSlice.actions;
 
 export const selectConfirmationState = (state: RootState) => state.confirmation;
 
