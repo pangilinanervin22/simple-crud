@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { Users } from "../../types";
 import { RootState } from "../store";
+import { allUsers } from "../users";
 
 const userAdapter = createEntityAdapter<Users>({
 	selectId: (user) => user.id,
@@ -30,6 +31,10 @@ const userSlice = createSlice({
 		updateUser(state, action) {
 			userAdapter.upsertOne(state, action.payload);
 		},
+		resetUser(state) {
+			userAdapter.removeAll(state);
+			userAdapter.setAll(state, allUsers);
+		},
 	},
 });
 
@@ -39,7 +44,7 @@ export const {
 	selectTotal: selectTotalUser,
 } = userAdapter.getSelectors((state: RootState) => state.user);
 
-export const { addUser, deleteUser, updateUser, deleteManyUser } =
+export const { addUser, deleteUser, updateUser, deleteManyUser, resetUser } =
 	userSlice.actions;
 
 export const userStatus = (state: RootState) => state.user.status;

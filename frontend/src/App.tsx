@@ -1,17 +1,15 @@
 import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import SideBar from "./components/SideBar";
 import Login from "./pages/Login";
 import MainPage from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Users from "./pages/Users";
 import React from "react";
 import { CircularProgress } from "@mui/material";
-const UserDelete = React.lazy(
-	() => import("./components/MainTable/UserDelete")
-);
-const UserEdit = React.lazy(() => import("./components/MainTable/UserEdit"));
+import SideBar from "./components/SideBar";
+
+const UserEdit = React.lazy(() => import("./components/UserEdit"));
 const GlobalConfirmation = React.lazy(
 	() => import("./components/GlobalConfirmation")
 );
@@ -31,10 +29,12 @@ function App() {
 					<React.Suspense
 						fallback={
 							<Box
-								height="350px"
-								display="flex"
-								justifyContent="center"
-								alignItems="center"
+								sx={{
+									height: "350px",
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
 							>
 								<CircularProgress />
 							</Box>
@@ -42,11 +42,7 @@ function App() {
 					>
 						<Routes>
 							<Route path="/" element={<Users />}>
-								<Route
-									path="delete/:id"
-									element={<UserDelete />}
-								/>
-								<Route path=":id" element={<UserEdit />} />
+								<Route path="/:id" element={<UserEdit />} />
 							</Route>
 
 							<Route path="/login" element={<Login />} />

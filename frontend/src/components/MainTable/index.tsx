@@ -1,39 +1,49 @@
 import {
 	Checkbox,
-	CheckboxClassKey,
-	CheckboxProps,
 	CircularProgress,
 	Paper,
 	TablePagination,
 	TableSortLabel,
+	Box,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import { SyntheticEvent, useMemo, useState } from "react";
-import UserHeaderTable from "./UserHeaderTable";
-import UserToolTable from "./UserToolTable";
-import { Column, Users } from "../../types";
-import UserBodyTable from "./UserBodyTable";
-import { paginate } from "../../utils/paginate";
-import { sortPath } from "../../utils/sortPath";
-import { useSelector } from "react-redux";
+import { useMemo, useState } from "react";
+import MainToolTable from "./MainTableTool";
+import MainHeaderTable from "./MainTableHeader";
+import MainBodyTable from "./MainTableBody";
+import { paginate } from "./utils/paginate";
+import { sortPath } from "./utils/sortPath";
 
-import { deleteManyUser, selectAllUsers } from "../../app/features/userSlice";
 import theme from "../../mui/themes";
-import { useDispatch } from "react-redux";
-import { addConfirmation } from "../../app/features/confirmationSlice";
-import { showNotification } from "../../app/features/notificationSlice";
 
-const Columns: Column[] = [
-	{ label: "Name", path: "name", align: "left", width: "auto" },
-	{ label: "Age", path: "age", align: "right", width: "10%" },
-	{ label: "Position", path: "position", align: "right", width: "20%" },
-	{ label: "Gender", path: "gender", align: "right", width: "15%" },
-];
+interface thisProps {
+	data: Array<any>;
+	base: Array<any>;
+	handleAdd: Function;
+	handleEdit: Function;
+	handleDelete: Function;
+	handleTrash: Function;
+	handleRefresh: Function;
+}
 
-export default function MainTable() {
-	const dispatch = useDispatch();
-	const data = useSelector(selectAllUsers);
+interface sortColumnProps {
+	path: string;
+	order: "asc" | "desc";
+}
 
+export interface cellBase {
+	path: string;
+	label: string;
+}
+
+export default function MainTable({
+	data,
+	base,
+	handleAdd,
+	handleEdit,
+	handleDelete,
+	handleTrash,
+	handleRefresh,
+}: thisProps) {
 	const [page, setPage] = useState({
 		current: 0,
 		size: 5,
@@ -41,10 +51,7 @@ export default function MainTable() {
 
 	const [checkList, setCheckList] = useState<string[]>([]);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [sortColumn, setSortColumn] = useState<{
-		path: string;
-		order: "asc" | "desc";
-	}>({
+	const [sortColumn, setSortColumn] = useState<sortColumnProps>({
 		path: "name",
 		order: "asc",
 	});
@@ -55,7 +62,7 @@ export default function MainTable() {
 	//sorting by search query filter
 	sortedData = useMemo(
 		() =>
-			data.filter((item: Users) =>
+			data.filter((item: any) =>
 				item.name.toLowerCase().includes(searchQuery.toLowerCase())
 			),
 		[searchQuery, data]
@@ -83,33 +90,38 @@ export default function MainTable() {
 		<>
 			<Paper
 				sx={{
-					width: "800px",
+					width: "900px",
 					marginInline: "auto",
 					mt: "10px",
 					overflow: "hidden",
 				}}
 			>
-				<UserToolTable
-					handleSearch={handleSearch}
-					handleTrash={handleTrash}
+				<MainToolTable
 					checkList={checkList}
+					handleSearch={onHandleSearch}
+					handleTrash={onHandleTrash}
+					handleAdd={onHandleAdd}
+					handleRefresh={onHandleRefresh}
 				/>
-				<UserHeaderTable base={Columns} render={renderCellHeader} />
+				<MainHeaderTable base={base} renderCell={renderCellHeader} />
 				{sortedData.length === 0 ? (
 					<Box
-						height="350px"
-						display="flex"
-						justifyContent="center"
-						alignItems="center"
+						sx={{
+							height: "350px",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
 					>
 						<CircularProgress />
 					</Box>
 				) : (
-					<UserBodyTable
-						base={Columns}
+					<MainBodyTable
+						base={base}
 						content={sortedData}
-						onCheck={addCheckList}
-						checkList={checkList}
+						renderCell={renderCellBody}
+						handleDelete={onHandleDelete}
+						handleEdit={onHandleEdit}
 					/>
 				)}
 				<TablePagination
@@ -119,27 +131,25 @@ export default function MainTable() {
 					count={sizeData}
 					rowsPerPage={size}
 					rowsPerPageOptions={[5, 15, 30]}
-					onPageChange={handlePage}
-					onRowsPerPageChange={handlePageSize}
+					onPageChange={onHandlePage}
+					onRowsPerPageChange={onHandlePageSize}
 				></TablePagination>
 			</Paper>
 		</>
 	);
 
-	function handlePage(skipMUI: any, value: number) {
+	function onHandlePage(skipMUI: any, value: number) {
 		setPage({ ...page, current: value });
 	}
 
-	function handlePageSize(event: any) {
-		console.log(event.target.value);
-
+	function onHandlePageSize(event: any) {
 		setPage({
 			size: event.target.value,
 			current: 0,
 		});
 	}
 
-	function handleHeaderClick(path: string) {
+	function onHandleHeaderClick(path: string) {
 		let tempSortColumn = { ...sortColumn };
 
 		if (tempSortColumn.path === path)
@@ -154,7 +164,7 @@ export default function MainTable() {
 		});
 	}
 
-	function handleSearch(value: string) {
+	function onHandleSearch(value: string) {
 		setSearchQuery(value);
 		setPage({
 			...page,
@@ -170,40 +180,66 @@ export default function MainTable() {
 		setCheckList([...temp]);
 	}
 
-	function handleTrash() {
-		dispatch(
-			addConfirmation({
-				message: "Are you sure you want to delete this users?",
-				actionClick: () => {
-					setCheckList([]);
-					setPage({
-						...page,
-						current: 0,
-					});
-					dispatch(deleteManyUser(checkList));
-					dispatch(
-						showNotification({
-							message: "Successfully delete many users",
-							variant: "success",
-						})
-					);
-				},
-			})
-		);
+	function renderCellBody(item: any, base: cellBase) {
+		if (base.path === "name")
+			return (
+				<>
+					<Checkbox
+						checked={checkList.includes(item.id)}
+						onChange={(e, isCheck) =>
+							addCheckList(isCheck, item.id)
+						}
+					/>
+					{item[base.path]}
+				</>
+			);
+		return item[base.path];
 	}
 
-	function renderCellHeader(item: Column) {
+	function renderCellHeader(item: cellBase) {
 		if (item.path)
 			return (
 				<TableSortLabel
 					active={sortColumn.path === item.path}
 					direction={sortColumn.order}
-					onClick={() => handleHeaderClick(item.path)}
+					onClick={() => onHandleHeaderClick(item.path)}
 				>
 					{item.label}
 				</TableSortLabel>
 			);
 
 		return <></>;
+	}
+
+	function onHandleAdd() {
+		handleAdd();
+	}
+
+	function onHandleEdit(id: string) {
+		handleEdit(id);
+	}
+
+	function onHandleDelete(id: string) {
+		handleDelete(id, () => {
+			setCheckList([]);
+			setPage({
+				...page,
+				current: 0,
+			});
+		});
+	}
+
+	function onHandleTrash() {
+		handleTrash(checkList, () => {
+			setCheckList([]);
+			setPage({
+				...page,
+				current: 0,
+			});
+		});
+	}
+
+	function onHandleRefresh() {
+		handleRefresh();
 	}
 }
