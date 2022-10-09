@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const path: any = process.env.DATABASE_PATH;
+const path: string = process.env.DATABASE_PATH || "";
 
 export async function connectMongoDB() {
 	await mongoose

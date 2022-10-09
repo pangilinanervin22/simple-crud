@@ -15,9 +15,6 @@ const app: Application = express();
 console.log(process.env.SAMPLE);
 connectMongoDB();
 
-app.set("view engine", "ejs");
-app.set("views", "./src/public/views/");
-
 app.use(
 	limiter({
 		windowMs: 1000,
@@ -26,7 +23,8 @@ app.use(
 		statusCode: 400,
 	})
 );
-
+app.set("view engine", "ejs");
+app.set("views", "./src/public/views/");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -36,14 +34,14 @@ app.use(main);
 
 //this will catch errors from the middleware (asyncErrors)
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-	res.status(500).send(" SOMETHING FAILED " + err.name);
+	res.status(500).send("SOMETHING FAILED " + err.name);
 	console.log("catch error" + err.message);
 
 	next();
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 if (app.get("env") === "development") app.use(morgan("tiny"));
 
-app.listen(port, () => console.log(` Listening on port ${port}...`));
+app.listen(port, () => console.log(`Listening on port ${port}...`));
