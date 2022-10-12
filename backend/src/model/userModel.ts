@@ -31,15 +31,15 @@ UserSchema.methods.generateToken = function () {
 	return { id: "Token " + this._id, title: this.title, genre: this.genre };
 };
 
-// MovieSchema.path("title").get(function (v: any) {
+// UserSchema.path("title").get(function (v: any) {
 // 	return "title: " + v;
 // });
 
-// MovieSchema.path("title").set(function (v: any) {
+// UserSchema.path("title").set(function (v: any) {
 // 	return "title: " + v;
 // });
 
-// MovieSchema.eachPath(function (path) {
+// UserSchema.eachPath(function (path) {
 // 	console.log(path);
 // });
 

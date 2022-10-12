@@ -29,6 +29,7 @@ router.get(
 		const num = Math.round(100000 + Math.random() * 10000);
 		setTimeout(() => {
 			res.send(num.toString());
+			console.log(num.toString());
 		}, 1500);
 	})
 );

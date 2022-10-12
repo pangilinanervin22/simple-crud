@@ -1,12 +1,19 @@
 import Joi from "Joi";
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose, { model, Model, Schema } from "mongoose";
 
 export interface IMovies {
 	title: string;
 	genre: string;
+	isAdmin?: boolean;
 }
 
-const MovieSchema: Schema = new mongoose.Schema({
+interface IMoviesMethods {
+	generateToken(): `object`;
+}
+
+type IMoviesModel = Model<IMovies, {}, IMoviesMethods>;
+
+const MovieSchema: Schema<IMovies, IMoviesModel> = new mongoose.Schema({
 	title: {
 		type: String,
 		required: [true, "Why title?"],
@@ -25,7 +32,7 @@ const MovieSchema: Schema = new mongoose.Schema({
 });
 
 MovieSchema.methods.generateToken = function () {
-	return { id: "Token " + this._id, title: this.title, genre: this.genre };
+	return this._id;
 };
 
 // MovieSchema.path("title").get(function (v: any) {
@@ -40,7 +47,7 @@ MovieSchema.methods.generateToken = function () {
 // 	console.log(path);
 // });
 
-export const Movies = mongoose.model("Movies", MovieSchema);
+export const Movies = model<IMovies, IMoviesModel>("Movies", MovieSchema);
 
 export function validateMovies(movie: IMovies) {
 	const schema = Joi.object({

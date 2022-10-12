@@ -1,6 +1,5 @@
 import { Movies, validateMovies } from "../model/movieModel";
 import { Request, Response } from "express";
-import { log } from "console";
 
 export default {
 	//get data
@@ -13,7 +12,7 @@ export default {
 	},
 
 	async getMovieById(req: Request, res: Response) {
-		const movie: any = await Movies.findOne({
+		const movie = await Movies.findOne({
 			_id: req.params.id,
 		});
 
@@ -22,7 +21,7 @@ export default {
 				.status(404)
 				.send("The genre with the given ID was not found.");
 
-		console.log(movie.get("title"));
+		console.log(movie.get("title"), movie?.generateToken());
 
 		res.send(movie);
 	},
