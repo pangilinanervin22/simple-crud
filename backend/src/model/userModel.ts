@@ -1,12 +1,21 @@
 import Joi, { number } from "Joi";
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose, { model, Model, Schema } from "mongoose";
 
-export interface IMovies {
-	title: string;
-	genre: string;
+export interface IUser {
+	name: string;
+	age: number;
+	gender: string;
+	position: string;
+	isAdmin?: boolean;
 }
 
-const UserSchema: Schema = new Schema({
+interface IUserMethod {
+	generateToken(): string;
+}
+
+type IMoviesModel = Model<IUser, {}, IUserMethod>;
+
+const UserSchema: Schema<IUser> = new Schema({
 	name: {
 		type: String,
 		required: [true, "Why title?"],
@@ -14,7 +23,7 @@ const UserSchema: Schema = new Schema({
 		maxlength: 50,
 	},
 	age: {
-		type: number,
+		type: Number,
 		required: true,
 		min: 18,
 		max: 50,
@@ -23,34 +32,26 @@ const UserSchema: Schema = new Schema({
 		type: String,
 	},
 	position: {
-		type: Boolean,
+		type: String,
+		minlength: 5,
+		maxlength: 50,
 	},
 });
 
 UserSchema.methods.generateToken = function () {
-	return { id: "Token " + this._id, title: this.title, genre: this.genre };
+	return this._id;
 };
 
-// UserSchema.path("title").get(function (v: any) {
-// 	return "title: " + v;
-// });
+export const User = model<IUser, IMoviesModel>("User", UserSchema);
 
-// UserSchema.path("title").set(function (v: any) {
-// 	return "title: " + v;
-// });
-
-// UserSchema.eachPath(function (path) {
-// 	console.log(path);
-// });
-
-export const Users = mongoose.model("User", UserSchema);
-
-export function validateMovies(movie: IMovies) {
+export function validateUser(user: IUser) {
 	const schema = Joi.object({
-		title: Joi.string().min(3).max(50).required(),
-		genre: Joi.string().min(3).max(20).required(),
+		name: Joi.string().min(3).max(50).required(),
+		gender: Joi.string().min(3).max(20).required(),
+		age: Joi.number().min(18).max(99).required(),
+		position: Joi.string().min(5).max(50).required(),
 		isAdmin: Joi.boolean(),
 	});
 
-	return schema.validate(movie);
+	return schema.validate(user);
 }

@@ -8,6 +8,7 @@ import limiter from "express-rate-limit";
 import { connectMongoDB } from "./src/config/database";
 import { router as main } from "./src/routes/main.routes";
 import { router as movies } from "./src/routes/movies.routes";
+import { router as users } from "./src/routes/users.routes";
 
 const app: Application = express();
 
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(helmet());
 app.use("/api/movies", movies);
+app.use("/api/users", users);
 app.use(main);
 
 //this will catch errors from the middleware (asyncErrors)

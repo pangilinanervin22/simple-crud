@@ -8,7 +8,7 @@ export interface IMovies {
 }
 
 interface IMoviesMethods {
-	generateToken(): `object`;
+	generateToken(): object;
 }
 
 type IMoviesModel = Model<IMovies, {}, IMoviesMethods>;
