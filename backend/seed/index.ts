@@ -30,4 +30,4 @@ async function seedUsers(total: number = 5) {
 	}
 }
 // seedUsers();
-fetchSomething().then((data) => console.log(data));
+fetchSomething().then((data) => console.log(data.length));

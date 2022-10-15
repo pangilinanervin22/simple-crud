@@ -26,7 +26,7 @@ const UserSchema: Schema<IUser> = new Schema({
 		type: Number,
 		required: true,
 		min: 18,
-		max: 50,
+		max: 65,
 	},
 	gender: {
 		type: String,
