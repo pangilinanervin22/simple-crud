@@ -19,7 +19,7 @@ connectMongoDB();
 app.use(
 	limiter({
 		windowMs: 1000,
-		max: 5,
+		max: 10,
 		message: "Wait for another request",
 		statusCode: 400,
 	})
