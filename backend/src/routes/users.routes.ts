@@ -13,4 +13,4 @@ router
 	.put(asyncHandle(userController.updateUserById))
 	.delete(asyncHandle(userController.deleteUserById));
 
-router.post("/:title/:genre", userController.updateUserByParams);
+// router.post("/:title/:genre", userController.updateUserByParams);

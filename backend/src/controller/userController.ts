@@ -50,17 +50,16 @@ export default {
 
 	//update data
 	async updateUserById(req: Request, res: Response) {
-		console.log(req.body);
-		const { error } = validateUser(req.body);
+		console.log(req.params);
 
-		console.log("error :", error);
+		const { error } = validateUser(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
 
 		const user = await User.findByIdAndUpdate(req.params.id, {
-			name: req.params.name,
-			age: Number(req.params.age),
-			gender: req.params.gender,
-			position: req.params.position,
+			name: req.body.name,
+			age: Number(req.body.age),
+			gender: req.body.gender,
+			position: req.body.position,
 		});
 
 		if (!user)
@@ -72,6 +71,8 @@ export default {
 	},
 
 	async updateUserByParams(req: Request, res: Response) {
+		console.log("THIS BODY");
+
 		console.log(req.params);
 		const { error } = validateUser({
 			name: req.params.name,
