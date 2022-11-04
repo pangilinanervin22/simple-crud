@@ -54,6 +54,7 @@ export function validateMovies(movie: IMovies) {
 		title: Joi.string().min(3).max(50).required(),
 		genre: Joi.string().min(3).max(20).required(),
 		isAdmin: Joi.boolean(),
+		_id: Joi.string(),
 	});
 
 	return schema.validate(movie);

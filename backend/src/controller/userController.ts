@@ -50,7 +50,7 @@ export default {
 
 	//update data
 	async updateUserById(req: Request, res: Response) {
-		console.log(req.params);
+		console.log(req.params, req.body.age);
 
 		const { error } = validateUser(req.body);
 		if (error) return res.status(400).send(error.details[0].message);
