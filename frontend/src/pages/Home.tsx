@@ -8,14 +8,19 @@ import { showNotification } from "../app/features/notificationSlice";
 import { userStatus } from "../app/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addConfirmation } from "../app/features/confirmationSlice";
+import { RootState } from "../app/store";
+import { useGetUserByIdQuery } from "../app/api/apiSlice";
 
 export default function MainPage() {
 	const data = useSelector(selectCountState);
 	const dispatch = useDispatch();
 
 	const status = useSelector(userStatus);
+	const { data: data2, isLoading } = useGetUserByIdQuery(
+		"634ad56012f79e18e6ec2c4f"
+	);
 
-	// console.log(status, 2);
+	console.log(data2, 2);
 
 	return (
 		<div>
