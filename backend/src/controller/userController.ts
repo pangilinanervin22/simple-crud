@@ -19,7 +19,8 @@ export default {
 				.status(404)
 				.send("The genre with the given ID was not found.");
 
-		console.log(user.get("name"), user?.generateToken());
+		// console.log("get");
+		// console.log(user.get("name"), user?.generateToken());
 
 		res.send(user);
 	},
@@ -27,12 +28,12 @@ export default {
 	// post data
 	async postUser(req: Request, res: Response) {
 		const { error } = validateUser(req.body);
-		console.log("error :", error);
+
+		console.log(error);
+
 		if (error) return res.status(400).send(error.details[0].message);
 
 		const user = new User({ ...req.body });
-
-		console.log(await user.save());
 
 		res.send(await user.save());
 	},
@@ -50,9 +51,12 @@ export default {
 
 	//update data
 	async updateUserById(req: Request, res: Response) {
-		console.log(req.params, req.body.age);
+		console.log("2", 12312);
 
 		const { error } = validateUser(req.body);
+
+		console.log(error);
+
 		if (error) return res.status(400).send(error.details[0].message);
 
 		const user = await User.findByIdAndUpdate(req.params.id, {
@@ -61,6 +65,10 @@ export default {
 			gender: req.body.gender,
 			position: req.body.position,
 		});
+
+		console.log("post", error);
+
+		console.log(req.params, error);
 
 		if (!user)
 			return res
@@ -91,5 +99,14 @@ export default {
 		});
 
 		res.send(await user.save());
+	},
+
+	async deleteManyUsers(req: Request, res: Response) {
+		console.log(req.body);
+
+		if (req.body instanceof Array)
+			for (const item of req.body) await User.findByIdAndDelete(item);
+
+		return res.status(202);
 	},
 };

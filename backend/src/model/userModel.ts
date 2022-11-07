@@ -51,7 +51,7 @@ export function validateUser(user: IUser) {
 		age: Joi.number().min(18).max(99).required(),
 		position: Joi.string().min(5).max(50).required(),
 		isAdmin: Joi.boolean(),
-		_id: Joi.string().required(),
+		_id: Joi.string(),
 	});
 
 	return schema.validate(user);
