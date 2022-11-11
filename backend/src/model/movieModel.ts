@@ -1,4 +1,4 @@
-import Joi from "Joi";
+import Joi from "joi";
 import mongoose, { model, Model, Schema } from "mongoose";
 
 export interface IMovies {

@@ -1,4 +1,4 @@
-import Joi, { number } from "Joi";
+import Joi, { number } from "joi";
 import mongoose, { model, Model, Schema } from "mongoose";
 
 export interface IUser {
