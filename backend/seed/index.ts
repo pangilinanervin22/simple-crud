@@ -8,7 +8,7 @@ async function fetchSomething() {
 	return fetch.data;
 }
 
-async function seedUsers(total: number = 5) {
+async function seedUsers(total: number = 10) {
 	for (let i = 0; i < total; i++) {
 		const gender: "Male" | "Female" | any = faker.helpers.arrayElement([
 			"Male",

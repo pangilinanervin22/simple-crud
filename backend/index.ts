@@ -42,8 +42,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 	next();
 });
 
-const port = process.env.PORT || 4000;
-
 if (app.get("env") === "development") app.use(morgan("tiny"));
 
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+module.exports = app;
