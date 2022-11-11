@@ -8,6 +8,7 @@ import Users from "./pages/Users";
 import React from "react";
 import { CircularProgress } from "@mui/material";
 import SideBar from "./components/SideBar";
+import UserEditFetch from "./components/UserEditFetch";
 
 const UserEdit = React.lazy(() => import("./components/UserEdit"));
 const GlobalConfirmation = React.lazy(
@@ -41,8 +42,14 @@ function App() {
 						}
 					>
 						<Routes>
-							<Route path="/" element={<Users />}>
+							{/* <Route path="/" element={<Users />}>
 								<Route path="/:id" element={<UserEdit />} />
+							</Route> */}
+							<Route path="/" element={<Users />}>
+								<Route
+									path="/:id"
+									element={<UserEditFetch />}
+								/>
 							</Route>
 
 							<Route path="/login" element={<Login />} />

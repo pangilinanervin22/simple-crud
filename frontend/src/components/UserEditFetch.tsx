@@ -15,11 +15,13 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
 import { showNotification } from "../app/features/notificationSlice";
-import { addUser, updateUser, userById } from "../app/features/userSlice";
+import {
+	useAddUserMutation,
+	useGetUserByIdQuery,
+	useUpdateUserMutation,
+} from "../app/api/apiSlice";
 
 const schema = Joi.object({
 	name: Joi.string().min(3).max(40).required().messages({
@@ -43,14 +45,19 @@ const schema = Joi.object({
 	}),
 });
 
-export default function UserEdit() {
+export default function UserEditFetch() {
 	const dispatch = useDispatch();
 	const redirect = useNavigate();
+	const [isOpen, setIsOpen] = useState(true);
 	const { id: paramsId } = useParams<{ id: string }>();
 
-	const [isOpen, setIsOpen] = useState(true);
-	const data = useSelector((state: any) => userById(state, paramsId!));
+	const par = useParams();
+	console.log(par);
+
+	const { data, isSuccess, isLoading } = useGetUserByIdQuery(paramsId!);
 	const currentObject: any = !data || paramsId === "new" ? {} : data;
+	const [addUser] = useAddUserMutation();
+	const [updateUser, { isError, error: wew }] = useUpdateUserMutation();
 
 	const {
 		register,
@@ -61,34 +68,43 @@ export default function UserEdit() {
 		resolver: joiResolver(schema),
 	});
 
-	const onSubmit = (data: any) => {
-		if (!currentObject || paramsId === "new")
-			dispatch(addUser({ ...data, id: nanoid() }));
-		else dispatch(updateUser({ ...data, id: paramsId }));
+	const onSubmit = (formData: any) => {
+		console.log("submit");
+
+		handleOpenDialog();
+
+		if (!currentObject || paramsId === "new") addUser({ ...formData });
+		else updateUser({ ...formData, _id: paramsId });
 
 		dispatch(
 			showNotification({
 				message:
 					paramsId === "new"
-						? "Successfully added new data"
-						: "Successfully update " + data.name,
+						? "Successfully added new Data"
+						: "Successfully update " + formData.name,
 				variant: "success",
 			})
 		);
-		handleOpenDialog();
 	};
 
 	useEffect(() => {
 		for (const key in currentObject) {
-			if (key == "id") continue;
+			if (key == "_id" || key == "__v") continue;
 
 			setValue(key, currentObject[key]);
 		}
-	}, []);
+	}, [isSuccess]);
+
+	// console.log(isOpen && isSuccess);
+	console.log("render", wew, isError);
 
 	return (
 		<>
-			<Dialog open={isOpen} onClose={() => {}} maxWidth="lg">
+			<Dialog
+				open={isOpen && !isLoading}
+				onClose={() => {}}
+				maxWidth="lg"
+			>
 				<DialogTitle>
 					{paramsId == "new" ? "Add new movie" : "Edit movie"}
 				</DialogTitle>
@@ -209,7 +225,7 @@ export default function UserEdit() {
 	);
 
 	function handleOpenDialog() {
-		redirect("../", { replace: true });
 		setIsOpen(false);
+		redirect("../", { replace: true });
 	}
 }

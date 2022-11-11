@@ -5,25 +5,15 @@ import { RootState } from "../store";
 export const apiSlice = createApi({
 	reducerPath: "apiUser",
 	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api" }),
-	tagTypes: ["User"],
+	tagTypes: ["Users"],
 	endpoints: (builder) => ({
-		getRandom: builder.query({
-			query: () => "/random",
-		}),
-		postRandom: builder.mutation({
-			query: (initialPost) => ({
-				url: "/random",
-				method: "POST",
-				body: initialPost,
-			}),
-		}),
 		getUsers: builder.query({
 			query: () => "/users",
-			providesTags: ["User"],
+			providesTags: ["Users"],
 		}),
 		getUserById: builder.query({
 			query: (postId) => "/users/" + postId,
-			providesTags: ["User"],
+			providesTags: ["Users"],
 		}),
 		updateUser: builder.mutation({
 			query: (initialPost) => ({
@@ -31,9 +21,8 @@ export const apiSlice = createApi({
 				method: "PUT",
 				body: initialPost,
 			}),
-			invalidatesTags: ["User"],
+			invalidatesTags: ["Users"],
 		}),
-
 		addUser: builder.mutation({
 			query: (initialPost) => ({
 				url: "/users",
@@ -43,14 +32,22 @@ export const apiSlice = createApi({
 			transformResponse: (data: UsersFetch) => {
 				return data;
 			},
-			invalidatesTags: ["User"],
+			invalidatesTags: ["Users"],
 		}),
-		deleteMovie: builder.mutation({
+		deleteUser: builder.mutation({
 			query: (_id) => ({
 				url: `/users/${_id}`,
 				method: "Delete",
 			}),
-			invalidatesTags: ["User"],
+			invalidatesTags: ["Users"],
+		}),
+		deleteManyUser: builder.mutation({
+			query: (body) => ({
+				url: `/users/many/`,
+				method: "Delete",
+				body: body,
+			}),
+			invalidatesTags: ["Users"],
 		}),
 	}),
 });
@@ -59,10 +56,9 @@ export const {
 	useGetUsersQuery,
 	useGetUserByIdQuery,
 	useAddUserMutation,
-	useGetRandomQuery,
-	usePostRandomMutation,
-	useDeleteMovieMutation,
+	useDeleteUserMutation,
 	useUpdateUserMutation,
+	useDeleteManyUserMutation,
 } = apiSlice;
 
 export const selectUserState = (state: RootState) => state.user;

@@ -185,9 +185,9 @@ export default function MainTable({
 			return (
 				<>
 					<Checkbox
-						checked={checkList.includes(item.id)}
+						checked={checkList.includes(item._id)}
 						onChange={(e, isCheck) =>
-							addCheckList(isCheck, item.id)
+							addCheckList(isCheck, item._id)
 						}
 					/>
 					{item[base.path]}

@@ -28,7 +28,7 @@ export default function BodyTable({
 				<Table size="medium">
 					<TableBody>
 						{content.map((item) => (
-							<TableRow key={item.id}>
+							<TableRow key={item._id || item.path}>
 								{base.map((base) => (
 									<TableCell
 										key={String(base.path)}
@@ -43,7 +43,7 @@ export default function BodyTable({
 										size="small"
 										color="info"
 										variant="contained"
-										onClick={() => editCell(item.id)}
+										onClick={() => editCell(item._id)}
 									>
 										Edit
 									</Button>
@@ -51,7 +51,7 @@ export default function BodyTable({
 										size="small"
 										color="error"
 										variant="contained"
-										onClick={() => deleteCell(item.id)}
+										onClick={() => deleteCell(item._id)}
 									>
 										Delete
 									</Button>
