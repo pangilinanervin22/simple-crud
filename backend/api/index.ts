@@ -11,9 +11,6 @@ import { router as movies } from "../src/routes/movies.routes";
 import { router as users } from "../src/routes/users.routes";
 
 const app: Application = express();
-
-//usage
-console.log(process.env.SAMPLE);
 connectMongoDB();
 
 app.use(
@@ -33,6 +30,10 @@ app.use(helmet());
 app.use("/api/movies", movies);
 app.use("/api/users", users);
 app.use(main);
+
+app.get("/api", async (req, res) => {
+	res.json({ success: "awit" });
+});
 
 //this will catch errors from the middleware (asyncErrors)
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
