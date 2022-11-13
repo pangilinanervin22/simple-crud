@@ -10,7 +10,7 @@ import theme from "./mui/themes";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<BrowserRouter basename="simple-crud">
+		<BrowserRouter>
 			<Provider store={store}>
 				<ThemeProvider theme={theme}>
 					<CssBaseline />

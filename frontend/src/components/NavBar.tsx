@@ -11,7 +11,7 @@ export default function NavBar() {
 				padding: " 10px  20px",
 			}}
 		>
-			<Typography variant="h5"> Simple Crud Demo</Typography>
+			<Typography variant="h5">FullStack Simple Crud </Typography>
 		</AppBar>
 	);
 }

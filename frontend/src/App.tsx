@@ -22,7 +22,7 @@ function App() {
 	return (
 		<>
 			<Box sx={{ position: "relative", display: "flex" }}>
-				<SideBar />
+				{/* <SideBar /> */}
 				<GlobalNotification />
 				<GlobalConfirmation />
 				<Box sx={{ width: "100%" }}>

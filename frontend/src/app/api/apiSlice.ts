@@ -5,7 +5,8 @@ import { RootState } from "../store";
 export const apiSlice = createApi({
 	reducerPath: "apiUser",
 	baseQuery: fetchBaseQuery({
-		baseUrl: "https://simple-crud-alpha.vercel.app/api",
+		baseUrl:
+			"https://simple-crud-backend-pangilinanervin22.vercel.app/api/",
 	}),
 	tagTypes: ["Users"],
 	endpoints: (builder) => ({
