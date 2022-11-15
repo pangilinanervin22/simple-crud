@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
@@ -8,6 +8,7 @@ import Users from "./pages/Users";
 import React from "react";
 import { CircularProgress } from "@mui/material";
 import SideBar from "./components/SideBar";
+import theme from "./mui/themes";
 
 const UserEdit = React.lazy(() => import("./components/UserEdit"));
 const GlobalConfirmation = React.lazy(
@@ -20,38 +21,41 @@ const GlobalNotification = React.lazy(
 function App() {
 	return (
 		<>
-			<Box sx={{ position: "relative", display: "flex" }}>
-				{/* <SideBar /> */}
-				<GlobalNotification />
-				<GlobalConfirmation />
-				<Box sx={{ width: "100%" }}>
-					<NavBar />
-					<React.Suspense
-						fallback={
-							<Box
-								sx={{
-									height: "350px",
-									display: "flex",
-									justifyContent: "center",
-									alignItems: "center",
-								}}
-							>
-								<CircularProgress />
-							</Box>
-						}
-					>
-						<Routes>
-							<Route path="/" element={<Users />}>
-								<Route path="/:id" element={<UserEdit />} />
-							</Route>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<Box sx={{ position: "relative", display: "flex" }}>
+					{/* <SideBar /> */}
+					<GlobalNotification />
+					<GlobalConfirmation />
+					<Box sx={{ width: "100%" }}>
+						<NavBar />
+						<React.Suspense
+							fallback={
+								<Box
+									sx={{
+										height: "350px",
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+									}}
+								>
+									<CircularProgress />
+								</Box>
+							}
+						>
+							<Routes>
+								<Route path="/" element={<Users />}>
+									<Route path="/:id" element={<UserEdit />} />
+								</Route>
 
-							<Route path="/login" element={<Login />} />
-							<Route path="/home" element={<MainPage />} />
-							<Route path="*" element={<NotFound />} />
-						</Routes>
-					</React.Suspense>
+								<Route path="/login" element={<Login />} />
+								<Route path="/home" element={<MainPage />} />
+								<Route path="*" element={<NotFound />} />
+							</Routes>
+						</React.Suspense>
+					</Box>
 				</Box>
-			</Box>
+			</ThemeProvider>
 		</>
 	);
 }
