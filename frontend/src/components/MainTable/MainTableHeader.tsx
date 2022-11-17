@@ -19,7 +19,6 @@ const HeaderTable = ({ base, renderCell: render }: thisProps) => {
 					<TableRow>
 						{base.map((item) => (
 							<TableCell
-								sx={{ fontSize: "18px", fontWeight: "bold" }}
 								width={item.width}
 								key={item.path}
 								align={item.align}
