@@ -4,18 +4,19 @@ import {
 	Tooltip,
 	Zoom,
 	IconButton,
-	PaletteMode,
 	Box,
+	useTheme,
 } from "@mui/material";
 import HelpIcon from "@mui/icons-material/Help";
 import { DarkMode, LightMode } from "@mui/icons-material";
 
 interface props {
 	toggleMode: Function;
-	mode: PaletteMode;
 }
 
-export default function NavBar({ toggleMode, mode }: props) {
+export default function NavBar({ toggleMode }: props) {
+	const mode = useTheme().palette.mode;
+
 	return (
 		<AppBar
 			color="primary"
@@ -28,6 +29,7 @@ export default function NavBar({ toggleMode, mode }: props) {
 				flexDirection: "row",
 				justifyContent: "space-between",
 				alignItems: "center",
+				height: "10vh",
 			}}
 		>
 			<Typography variant="h5"> Simple Crud Demo</Typography>
@@ -48,7 +50,8 @@ export default function NavBar({ toggleMode, mode }: props) {
 				<Tooltip
 					title={
 						<Typography variant="body1">
-							Just a demo data is store in array manage by redux
+							"Just a demo" data is store in array manage by
+							redux.
 						</Typography>
 					}
 					TransitionComponent={Zoom}

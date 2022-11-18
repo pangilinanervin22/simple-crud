@@ -5,6 +5,7 @@ import {
 	TablePagination,
 	TableSortLabel,
 	Box,
+	useTheme,
 } from "@mui/material";
 import { useMemo, useState } from "react";
 import MainToolTable from "./MainTableTool";
@@ -12,8 +13,6 @@ import MainHeaderTable from "./MainTableHeader";
 import MainBodyTable from "./MainTableBody";
 import { paginate } from "./utils/paginate";
 import { sortPath } from "./utils/sortPath";
-
-import theme from "../../mui/themes";
 
 interface thisProps {
 	data: Array<any>;
@@ -44,6 +43,8 @@ export default function MainTable({
 	handleTrash,
 	handleRefresh,
 }: thisProps) {
+	const theme = useTheme();
+
 	const [page, setPage] = useState({
 		current: 0,
 		size: 5,
@@ -93,7 +94,7 @@ export default function MainTable({
 					width: "900px",
 					marginInline: "auto",
 					mt: "10px",
-					overflow: "hidden",
+					height: "max",
 				}}
 			>
 				<MainToolTable

@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Users from "./pages/Users";
 import React, { useState } from "react";
 import { CircularProgress } from "@mui/material";
+import useThemeHook from "./mui/themes";
 
 const UserEdit = React.lazy(() => import("./components/UserEdit"));
 const GlobalConfirmation = React.lazy(
@@ -24,65 +25,18 @@ const GlobalNotification = React.lazy(
 );
 
 function App() {
-	const [themeMode, setThemeMode] = useState<PaletteMode>("dark");
-
-	const theme = createTheme({
-		palette: {
-			mode: themeMode,
-
-			primary: {
-				main: "#0080ff",
-			},
-			secondary: {
-				main: "#19857b",
-			},
-			error: {
-				main: "#ff0000",
-			},
-		},
-
-		components: {
-			MuiButton: {
-				styleOverrides: {
-					root: {
-						color: "whitesmoke",
-					},
-				},
-				defaultProps: {
-					size: "small",
-				},
-			},
-			MuiTableSortLabel: {
-				styleOverrides: {
-					root: {
-						fontSize: "18px",
-						fontWeight: "bold",
-						opacity: "0.8",
-						"&.Mui-active": { fontSize: "150%", opacity: "1" },
-					},
-				},
-			},
-		},
-
-		typography: {
-			fontWeightBold: "bolder",
-			fontWeightRegular: "500",
-			fontWeightLight: "normal",
-			fontFamily:
-				"-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
-		},
-	});
+	const [currentTheme, toggleMode] = useThemeHook();
 
 	return (
 		<>
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={currentTheme}>
 				<CssBaseline />
 				<Box sx={{ position: "relative", display: "flex" }}>
 					{/* <SideBar /> */}
 					<GlobalNotification />
 					<GlobalConfirmation />
 					<Box sx={{ width: "100%" }}>
-						<NavBar toggleMode={setThemeMode} mode={themeMode} />
+						<NavBar toggleMode={toggleMode} />
 						<React.Suspense
 							fallback={
 								<Box
